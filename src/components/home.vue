@@ -38,17 +38,17 @@
 		<div class="poilist">
 			<ul class="poilist-ul">
 				<!--第一个li开始-->
-				<li class="field">
+				<li class="field" v-for="list in businessList" @click="toBusinessDetail(list.businessId)">
 					<a href="#">
 						<div class="field-list">
 							<span class="brand">品牌</span>
-							<img src="../../static/images/商品图2.jpg" />
+							<img :src=list.businessImg|url alt="" />
 						</div>
 					</a>
 					<div class="content">
 						<a>
 							<div class="shop-title">
-								<p>云海肴·云南菜(昌平万科店)</p>
+								<p>{{list.businessName}}</p>
 							</div>
 							<div class="shop-mid-line">
 								<div>
@@ -58,14 +58,14 @@
 									<i class="star"></i>
 									<i class="star"></i>
 								</div>
-								<p>月售999+</p>
-								<span class="min">214m</span>
+								<p>月售{{list.monthlySales}}</p>
+								<span class="min">{{list.time}}</span>
 								<span class="line">|</span>
-								<span>48min</span>
+								<span>{{list.distance}}</span>
 							</div>
 							<div class="shop-line">
-								<span>起送价<em>￥20</em></span>
-								<span class="lin2">|</span>配送 ¥6
+								<span>起送价<em>￥{{list.startingPrice}}</em></span>
+								<span class="lin2">|</span>配送 ¥{{list.distribution}}
 								<div class="shop-discount"><span>美团专送</span></div>
 							</div>
 							<!--额外的优惠-->
@@ -84,130 +84,6 @@
 										<p class="li-text">本店支持开发票，开票金额2元起</p>
 									</li>
 								</ul>
-							</div>
-						</a>
-					</div>
-				</li>
-				<!--第二个li开始-->
-				<li class="field">
-					<a href="#">
-						<div class="field-list">
-							<span class="brand">品牌</span>
-							<img src="../../static/images/商品图2.jpg" />
-						</div>
-					</a>
-					<div class="content">
-						<a>
-							<div class="shop-title">
-								<p>云海肴·云南菜(昌平万科店)</p>
-							</div>
-							<div class="shop-mid-line">
-								<div>
-									<i class="star"></i>
-									<i class="star"></i>
-									<i class="star"></i>
-									<i class="star"></i>
-									<i class="star"></i>
-								</div>
-								<p>月售999+</p>
-								<span class="min">214m</span>
-								<span class="line">|</span>
-								<span>48min</span>
-							</div>
-							<div class="shop-line">
-								<span>起送价<em>￥20</em></span>
-								<span class="lin2">|</span>配送 ¥6
-								<div class="shop-discount"><span>美团专送</span></div>
-							</div>
-							<!--额外的优惠-->
-							<div class="other">
-								<ul>
-									<li>
-										<i class="lq">
-											<img src="../../static/images/票.png"/>
-										</i>
-										<p class="li-text">本店支持开发票，开票金额2元起</p>
-									</li>
-								</ul>
-							</div>
-						</a>
-					</div>
-				</li>
-				<!--三-->
-				<li class="field">
-					<a href="#">
-						<div class="field-list">
-							<span class="brand">品牌</span>
-							<img src="../../static/images/商品图2.jpg" />
-						</div>
-					</a>
-					<div class="content">
-						<a>
-							<div class="shop-title">
-								<p>云海肴·云南菜(昌平万科店)</p>
-							</div>
-							<div class="shop-mid-line">
-								<div>
-									<i class="star"></i>
-									<i class="star"></i>
-									<i class="star"></i>
-									<i class="star"></i>
-									<i class="star"></i>
-								</div>
-								<p>月售999+</p>
-								<span class="min">214m</span>
-								<span class="line">|</span>
-								<span>48min</span>
-							</div>
-							<div class="shop-line">
-								<span>起送价<em>￥20</em></span>
-								<span class="lin2">|</span>配送 ¥6
-								<div class="shop-discount"><span>美团专送</span></div>
-							</div>
-							<!--额外的优惠-->
-							<div class="other">
-								<ul>
-									<li>
-										<i class="lq">
-											<img src="../../static/images/领券.png"/>
-										</i>
-										<p class="li-text">有机会领取商家代金券</p>
-									</li>
-								</ul>
-							</div>
-						</a>
-					</div>
-				</li>
-				<!--四-->
-				<li class="field">
-					<a href="#">
-						<div class="field-list">
-							<span class="brand">品牌</span>
-							<img src="../../static/images/商品图2.jpg" />
-						</div>
-					</a>
-					<div class="content">
-						<a>
-							<div class="shop-title">
-								<p>云海肴·云南菜(昌平万科店)</p>
-							</div>
-							<div class="shop-mid-line">
-								<div>
-									<i class="star"></i>
-									<i class="star"></i>
-									<i class="star"></i>
-									<i class="star"></i>
-									<i class="star"></i>
-								</div>
-								<p>月售999+</p>
-								<span class="min">214m</span>
-								<span class="line">|</span>
-								<span>48min</span>
-							</div>
-							<div class="shop-line">
-								<span>起送价<em>￥20</em></span>
-								<span class="lin2">|</span>配送 ¥6
-								<div class="shop-discount"><span>美团专送</span></div>
 							</div>
 						</a>
 					</div>
@@ -221,7 +97,103 @@
 	export default {
 		name: "home",
 		data() {
-			return {};
+			return {
+				businessList: [{
+						businessId: '001',
+						businessName: '云海肴·云南菜(昌平万科店)', //商家名称
+						businessImg: 'p0.meituan.net/0.84.63/xianfu/ec41b1588ad603ad6f56d1ae437a01fe29312.jpg',
+						monthlySales: '639', //月售
+						time: '40min', //送达时间
+						distance: '1.7km', //距离
+						startingPrice: '20', //起送价
+						distribution: '5' //配送
+					},
+					{
+						businessId: '002',
+						businessName: '呷哺呷哺(昌平京客隆)', //商家名称
+						businessImg: 'p1.meituan.net/0.84.63/xianfu/a80b4acee4561b67bbe38cc9747fb32b24094.jpg',
+						monthlySales: '912', //月售
+						time: '61min', //送达时间
+						distance: '784m', //距离
+						startingPrice: '60', //起送价
+						distribution: '8' //配送
+					},
+					{
+						businessId: '003',
+						businessName: '巴贝拉意式休闲餐厅（昌平万科店）', //商家名称
+						businessImg: 'p0.meituan.net/0.84.63/xianfu/d2e3ffbcf01856721323f6f9414a16bc10772.jpeg',
+						monthlySales: '999+', //月售
+						time: '38min', //送达时间
+						distance: '1.6km', //距离
+						startingPrice: '30', //起送价
+						distribution: '6' //配送
+					},
+					{
+						businessId: '004',
+						businessName: '肯德基宅急送(昌平店）', //商家名称
+						businessImg: 'p1.meituan.net/0.84.63/xianfu/f49c565f3c4d51fda6c40a29ca6ff05e16938.jpg',
+						monthlySales: '999+', //月售
+						time: '40min', //送达时间
+						distance: '391m', //距离
+						startingPrice: '0', //起送价
+						distribution: '9' //配送
+					},
+					{
+						businessId: '005',
+						businessName: '嘉和一品粥(昌平店)', //商家名称
+						businessImg: 'p1.meituan.net/0.84.63/xianfu/54f8217743cc4bc5403a2a8a7c3fd2ac111372.png',
+						monthlySales: '999+', //月售
+						time: '30min', //送达时间
+						distance: '583m', //距离
+						startingPrice: '20', //起送价
+						distribution: '6' //配送
+					},
+					{
+						businessId: '005',
+						businessName: '望京小腰（五街店）', //商家名称
+						businessImg: 'p0.meituan.net/0.84.63/xianfu/856435fc730df39ab67bc317c0add69f43008.jpg',
+						monthlySales: '892', //月售
+						time: '30min', //送达时间
+						distance: '375m', //距离
+						startingPrice: '20', //起送价
+						distribution: '5' //配送
+					},
+					{
+						businessId: '006',
+						businessName: '盛昌潮汕砂锅粥', //商家名称
+						businessImg: 'p1.meituan.net/0.84.63/xianfu/dd015a9dc00a06438fd0f1ac076c05ac120335.jpg',
+						monthlySales: '999+', //月售
+						time: '33min', //送达时间
+						distance: '1.7km', //距离
+						startingPrice: '20', //起送价
+						distribution: '3' //配送
+					},
+					{
+						businessId: '007',
+						businessName: '北平人家饺子馆（鼓楼东街店）', //商家名称
+						businessImg: 'p0.meituan.net/0.84.63/xianfu/8958a06e6e60f740a794a8f1270034b924576.jpg',
+						monthlySales: '287', //月售
+						time: '32min', //送达时间
+						distance: '1.2km', //距离
+						startingPrice: '20', //起送价
+						distribution: '5' //配送
+					}
+				]
+			};
+		},
+		filters: {
+			url: function(value) {
+				if(!value) return ''
+				value = 'http://' + value
+				return value
+			}
+		},
+		methods: {
+			toBusinessDetail(businessId) {
+				this.$router.push({
+					path: '/businessList/' + businessId
+				})
+			}
 		},
 		mounted() {
 			document.documentElement.style.fontSize = innerWidth / 10 + "px";
