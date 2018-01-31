@@ -4,8 +4,8 @@
 			<router-link to="/home">
 				<div @click="switchFn('home')"><i class="bar-img" :class="barHomeImg"></i><span class="bar-btn-txt" :class="colorHome">首页</span></div>
 			</router-link>
-			<router-link to="/order">
-				<div @click="switchFn('order')"><i class="bar-img " :class="barOrderImg"></i><span class="bar-btn-txt" :class="colorOrder">订单</span></div>
+			<router-link to="/logIn">
+				<div @click="switchFn('logIn')"><i class="bar-img " :class="barOrderImg"></i><span class="bar-btn-txt" :class="colorOrder">订单</span></div>
 			</router-link>
 			<router-link to="/mine">
 				<div @click="switchFn('mine')"><i class="bar-img " :class="[barMineImg,colorMine]"></i><span class="bar-btn-txt" :class="colorMine">我的</span></div>
@@ -37,7 +37,7 @@
 					this.colorHome = 'colorHome'
 					this.colorOrder = 'color1'
 					this.colorMine = 'color1'
-				} else if(index == 'order') {
+				} else if(index == 'logIn') {
 					this.barHomeImg = "bar-home-img"
 					this.barOrderImg = "bar-order-img2"
 					this.barMineImg = "bar-mine-img"
