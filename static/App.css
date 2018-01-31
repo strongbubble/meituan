@@ -17,7 +17,7 @@
 		position: fixed;
 		bottom: 0;
 		width: 100%;
-		height: 49px;
+		height: 1.289473rem;
 		border-top: 1px solid #b6b6b6;
 		background-color: rgba(246, 246, 246, 0.95);
 		display: flex;
@@ -28,15 +28,14 @@
 	
 	#app .bar-btn-txt {
 		display: block;
-		font-size: 0.55rem;
-		color: #333;
+		font-size: 0.289473rem;
 	}
 	
 	#app .bar-img {
 		display: block;
-		width: 25px;
-		height: 25px;
-		margin: 7px auto 0;
+		width: 0.657894rem;
+		height: 0.657894rem;
+		margin: 0.18421rem auto 0;
 		background: url(images/nar_icon.png) no-repeat;
 		-webkit-background-size: 25px auto;
 		-moz-background-size: 25px auto;
@@ -48,6 +47,7 @@
 	
 	#app .bar-home-img2 {
 		background-position: 0 -50px;
+		color: #999;
 	}
 	
 	#app .bar-order-img {
@@ -56,6 +56,23 @@
 	
 	#app .bar-order-img2 {
 		background-position: 0 0;
+		color: #999;
+	}
+	
+	.colorHome {
+		color: #333;
+	}
+	
+	.colorOrder {
+		color: #333;
+	}
+	
+	.colorMine {
+		color: #333;
+	}
+	
+	.color1 {
+		color: #999;
 	}
 	
 	#app .bar-mine-img {
@@ -64,4 +81,5 @@
 	
 	#app .bar-mine-img2 {
 		background-position: 0 -100px;
+		color: #999;
 	}
