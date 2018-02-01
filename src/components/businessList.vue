@@ -6,18 +6,33 @@
 		</header>
 		<nav>
 			<ul>
-				<router-link to="/businessList/orderDishes/dishes">
+				<!--<router-link to="/businessList/orderDishes">
 					<li @click="switchFn2('orderDishes')" :class="selectedO">
 						<a href="javascript:void(0);">点菜</a>
 					</li>
 				</router-link>
-				<router-link to="/businessList/orderDishes/evaluate">
+				<router-link to="/businessList/evaluate">
 					<li @click="switchFn2('evaluate')" :class="selectedE">
 						<a href="javascript:void(0);">评价</a>
 					</li>
 				</router-link>
-				<router-link to="businessList/orderDishes/seller">
-					<li @click="switchFn2('seller')" :class="selectedS" >
+				<router-link to="/businessList/seller">
+					<li @click="switchFn2('seller')" :class="selectedS">
+						<a href="javascript:void(0);">商家</a>
+					</li>
+				</router-link>-->
+				<router-link to="/businessList/orderDishes">
+					<li>
+						<a href="javascript:void(0);">点菜</a>
+					</li>
+				</router-link>
+				<router-link to="/businessList/evaluate">
+					<li>
+						<a href="javascript:void(0);">评价</a>
+					</li>
+				</router-link>
+				<router-link to="/businessList/seller">
+					<li>
 						<a href="javascript:void(0);">商家</a>
 					</li>
 				</router-link>
@@ -83,7 +98,7 @@
 						distribution: '6' //配送
 					},
 					{
-						businessId: '005',
+						businessId: '006',
 						businessName: '望京小腰（五街店）', //商家名称
 						businessImg: 'p0.meituan.net/0.84.63/xianfu/856435fc730df39ab67bc317c0add69f43008.jpg',
 						monthlySales: '892', //月售
@@ -93,7 +108,7 @@
 						distribution: '5' //配送
 					},
 					{
-						businessId: '006',
+						businessId: '007',
 						businessName: '盛昌潮汕砂锅粥', //商家名称
 						businessImg: 'p1.meituan.net/0.84.63/xianfu/dd015a9dc00a06438fd0f1ac076c05ac120335.jpg',
 						monthlySales: '999+', //月售
@@ -103,7 +118,7 @@
 						distribution: '3' //配送
 					},
 					{
-						businessId: '007',
+						businessId: '008',
 						businessName: '北平人家饺子馆（鼓楼东街店）', //商家名称
 						businessImg: 'p0.meituan.net/0.84.63/xianfu/8958a06e6e60f740a794a8f1270034b924576.jpg',
 						monthlySales: '287', //月售
@@ -130,7 +145,7 @@
 		computed: {
 			business() {
 				for(var tempBusiness of this.businessList) {
-					if(this.$route.params.businessId == tempBusiness.businessId) {
+					if(this.$route.query.businessId == tempBusiness.businessId) {
 						return tempBusiness
 					}
 				}
