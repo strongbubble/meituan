@@ -11,6 +11,10 @@ import Mine from '../components/mine'
 import NotFound from '../components/NotFound'
 import BusinessList from '../components/businessList'
 import LogIn from '../components/logIn'
+import OrderDishes from '../components/orderDishes'
+import Evaluate from '../components/evaluate'
+import Seller from '../components/seller'
+import Adress from '../components/adress'
 //创建路由实例，并且配置路由规则,并且导出
 export default new VueRouter({
 	// 配置H5的history模式，这样URL会好看些
@@ -38,9 +42,27 @@ export default new VueRouter({
 			component: Mine
 		},
 		{
-			path: '/businessList/:businessId',
-			component: BusinessList
-		}, 
+			path: '/businessList',
+			component: BusinessList,
+			children: [
+				{
+					path: '',
+					redirect: 'orderDishes'
+				},
+				{
+					path: 'orderDishes',
+					component: OrderDishes
+				},
+				{
+					path: 'evaluate',
+					component: Evaluate
+				},
+				{
+					path: 'seller',
+					component: Seller
+				}
+			]
+		},
 		{
 			path: '/logIn',
 			component: LogIn
@@ -48,6 +70,10 @@ export default new VueRouter({
 		{
 			path: '*',
 			component: NotFound
+		},
+		{
+			path: '/adress',
+			component: Adress
 		}
 
 	]

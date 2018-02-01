@@ -38,7 +38,7 @@
 		<div class="poilist">
 			<ul class="poilist-ul">
 				<!--第一个li开始-->
-				<li class="field" v-for="list in businessList" @click="toBusinessDetail(list.businessId)">
+				<li class="field" v-for="list in businessList" @click="toBusinessDetail(list.businessId,list.businessName)">
 					<a href="#">
 						<div class="field-list">
 							<span class="brand">品牌</span>
@@ -149,7 +149,7 @@
 						distribution: '6' //配送
 					},
 					{
-						businessId: '005',
+						businessId: '006',
 						businessName: '望京小腰（五街店）', //商家名称
 						businessImg: 'p0.meituan.net/0.84.63/xianfu/856435fc730df39ab67bc317c0add69f43008.jpg',
 						monthlySales: '892', //月售
@@ -159,7 +159,7 @@
 						distribution: '5' //配送
 					},
 					{
-						businessId: '006',
+						businessId: '007',
 						businessName: '盛昌潮汕砂锅粥', //商家名称
 						businessImg: 'p1.meituan.net/0.84.63/xianfu/dd015a9dc00a06438fd0f1ac076c05ac120335.jpg',
 						monthlySales: '999+', //月售
@@ -169,7 +169,7 @@
 						distribution: '3' //配送
 					},
 					{
-						businessId: '007',
+						businessId: '008',
 						businessName: '北平人家饺子馆（鼓楼东街店）', //商家名称
 						businessImg: 'p0.meituan.net/0.84.63/xianfu/8958a06e6e60f740a794a8f1270034b924576.jpg',
 						monthlySales: '287', //月售
@@ -189,9 +189,13 @@
 			}
 		},
 		methods: {
-			toBusinessDetail(businessId) {
+			toBusinessDetail(businessId,businessName) {
 				this.$router.push({
-					path: '/businessList/' + businessId
+					path: '/businessList',
+					query: {
+						businessId,
+						businessName
+					}
 				})
 			}
 		},

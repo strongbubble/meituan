@@ -8,24 +8,27 @@
 		<div class="imp">
 			<ul>
 				<li class="adress">
-					<a href="#">
-						收货地址管理<span class="span2">></span>
-					</a>
+					<router-link to="/adress">
+							收货地址管理<span class="span2"><img src="../../static/mine_img/指缘返回2.png"/></span>
+					</router-link>
+					<!--<router-view></router-view>-->
 				</li>
 				<li class="money">
 					<a href="#">
-						商家代金券<span class="span2">></span>
+						
+							商家代金券<span class="span2"><img src="../../static/mine_img/指缘返回2.png"/></span>
+						
 					</a>
 				</li>
 				<div></div>
 				<li class="yijian">
 					<a href="#">
-						意见反馈<span class="span2">></span>
+						意见反馈<span class="span2"><img src="../../static/mine_img/指缘返回2.png"/></span>
 					</a>
 				</li>
 				<li class="ques">
 					<a href="#">
-						常见问题<span class="span2">></span>
+						常见问题<span class="span2"><img src="../../static/mine_img/指缘返回2.png"/></span>
 					</a>
 				</li>
 				<div></div>
@@ -69,7 +72,6 @@
 	
 	.span2 {
 		font-size: 16px;
-		color: #ccc;
 	}
 	
 	.mine {
