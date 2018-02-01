@@ -38,7 +38,7 @@
 		<div class="poilist">
 			<ul class="poilist-ul">
 				<!--第一个li开始-->
-				<li class="field" v-for="list in businessList" @click="toBusinessDetail(list.businessId,list.businessName)">
+				<li class="field" v-for="list in businessList" @click="toBusinessDetail(list.businessId)">
 					<a href="#">
 						<div class="field-list">
 							<span class="brand">品牌</span>
@@ -189,12 +189,11 @@
 			}
 		},
 		methods: {
-			toBusinessDetail(businessId,businessName) {
+			toBusinessDetail(businessId) {
 				this.$router.push({
 					path: '/businessList',
 					query: {
-						businessId,
-						businessName
+						businessId
 					}
 				})
 			}
