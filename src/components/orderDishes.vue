@@ -31,8 +31,8 @@
 								<div class="food-price-region"> <span class="food-price">¥{{i.min_price}}</span></div>
 								<div class="j-item-console foodop clearfix">
 									<a class="j-add-item add-food" href="javascript:;" @click="add(i.min_price,index)"><i class="icon i-add-food"></i></a>
-									<span class="j-item-num foodop-num" style="display:block">{{i.status}}</span>
-									<a class="j-remove-item remove-food" style="display:block" href="javascript:;" @click="reduce(i.min_price,index)"><i class="icon i-remove-food"></i></a>
+									<span class="j-item-num foodop-num" v-show="i.showStatus">{{i.status}}</span>
+									<a class="j-remove-item remove-food" v-show="i.show" href="javascript:;" @click="reduce(i.min_price,index)"><i class="icon i-remove-food"></i></a>
 								</div>
 							</div>
 						</div>
@@ -44,12 +44,17 @@
 		<div id="cart" class="cart">
 			<div class="cart-tip">
 				<div class="j-cart-icon cart-icon">
-					<i class="j-ico-cart ico-cart"></i>
+					<i class="j-ico-cart ico-cart" :class="icoCartActive"></i>
 				</div>
-				<div class="j-cart-empty cart-empty">购物车空空如也～</div>
+				<!--<div class="j-cart-empty cart-empty">{{totalPrice}}购物车空空如也～</div>-->
+				<div class="j-cart-noempty cart-noempty">
+					<span class="j-cart-price cart-price">{{totalPrice}}</span>
+					<br>
+					<span class="cart-shipping">配送费以订单为准</span>
+				</div>
 			</div>
 			<div class="cart-btns">
-				<a class="cart-btn-unavail"><span class="inner">{{totalPrice}}¥60起送</span></a>
+				<a class="cart-btn-unavail"><span class="inner">¥60起送</span></a>
 			</div>
 		</div>
 	</div>
@@ -66,6 +71,8 @@
 				businessList: [],
 				businessName: [],
 				changeRed: -1,
+				icoCartActive: '',
+				show: ''
 			}
 		},
 		mounted() {
@@ -96,17 +103,28 @@
 								this.spus = i.spus
 							}
 						}
+						for(var i = 0; i < this.spus.length; i++) {
+							this.spus[i].show = false
+							this.spus[i].showStatus = false
+						}
 					})
 			},
 			add(price, index) {
+				this.spus[index].show = true
+				this.spus[index].showStatus = true
 				this.spus[index].status++;
+				this.icoCartActive = 'ico-cart-active'
 				this.$store.dispatch('add', price)
+				this.numNew = this.spus[index].status
 			},
 			reduce(price, index) {
 				if(this.spus[index].status > 0) {
 					this.spus[index].status--;
-				} else {
-
+				}
+				if(this.spus[index].status == 0) {
+					this.spus[index].show = false
+					this.spus[index].showStatus = false
+					this.icoCartActive = ''
 				}
 				this.$store.dispatch('reduce', price)
 			}
@@ -126,6 +144,10 @@
 		computed: {
 			totalPrice() {
 				return this.$store.getters.getTotalPrice
+			},
+			isShow() {
+				//console.log(this.numNew)
+				//return this.numNew > 0 ? true : false
 			}
 		}
 	}
@@ -503,5 +525,16 @@
 		width: 28px;
 		height: 28px;
 		background-position: -16px -30px;
+	}
+	
+	.ico-cart-active {
+		background-position: 0 -57px;
+	}
+	
+	.cart-price {
+		font-size: 20px;
+		margin-left: 4px;
+		color: #fff;
+		line-height: 35px;
 	}
 </style>
