@@ -15,6 +15,7 @@ import OrderDishes from '../components/orderDishes'
 import Evaluate from '../components/evaluate'
 import Seller from '../components/seller'
 import Adress from '../components/adress'
+import Add from '../components/add'
 //创建路由实例，并且配置路由规则,并且导出
 export default new VueRouter({
 	// 配置H5的history模式，这样URL会好看些
@@ -74,6 +75,10 @@ export default new VueRouter({
 		{
 			path: '/adress',
 			component: Adress
+		},
+		{
+			path: '/add',
+			component: Add
 		}
 
 	]
