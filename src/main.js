@@ -6,6 +6,8 @@ import router from './router'
 import axios from 'axios'
 import '../static/App.css'
 
+// 导入我们自定义的vuex仓库
+import store from './store'
 Vue.prototype.axios = axios
 Vue.config.productionTip = false
 
@@ -14,5 +16,7 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  // 挂载store
+  store
 })

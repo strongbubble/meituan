@@ -48,32 +48,29 @@
 		},
 		methods: {
 			back() {
-				if(!!(window.history && history.pushState)) {
-					history.replaceState(null, "", "/businessList")
-				}
+				this.$router.push({
+					path: '/home'
+				})
 			}
-		//this.$router.go(-1)
-	},
-	switchFn2(index) {
-		if(index == 'orderDishes') {
-			this.selectedO = 'selected'
-			this.selectedE = 'rmSelected'
-			this.selectedS = 'rmSelected'
-		} else if(index == 'evaluate') {
-			this.selectedO = 'rmSelected'
-			this.selectedE = 'selected'
-			this.selectedS = 'rmSelected'
-		} else if(index == 'seller') {
-			this.selectedO = 'rmSelected'
-			this.selectedE = 'rmSelected'
-			this.selectedS = 'selected'
-		}
-	},
-	created() {
-			// 使用axios处理网络请求
+		},
+		switchFn2(index) {
+			if(index == 'orderDishes') {
+				this.selectedO = 'selected'
+				this.selectedE = 'rmSelected'
+				this.selectedS = 'rmSelected'
+			} else if(index == 'evaluate') {
+				this.selectedO = 'rmSelected'
+				this.selectedE = 'selected'
+				this.selectedS = 'rmSelected'
+			} else if(index == 'seller') {
+				this.selectedO = 'rmSelected'
+				this.selectedE = 'rmSelected'
+				this.selectedS = 'selected'
+			}
+		},
+		created() {
 			this.axios.get('http://localhost:8888/getBusinessList')
 				.then(res => {
-					// 数据绑定在属性中
 					this.businessList = res.data
 					for(var tempBusiness of this.businessList) {
 						if(this.$route.query.businessId == tempBusiness.businessId) {

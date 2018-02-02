@@ -19,8 +19,8 @@
 			<!--右侧菜单-->
 			<div class="foodlistwrap">
 				<h3 class="foodlist-label">和味单品 </h3>
-				<template v-for="list in taglist">
-					<div class="j-fooditem fooditem food615535498 clearfix" v-for="i in spus">
+				<template>
+					<div class="j-fooditem fooditem food615535498 clearfix" v-for="(i,index) in spus">
 						<div class="food-pic-wrap">
 							<img class="j-food-pic food-pic" :src=i.picture visibility="hidden" style="width: 82.6667px; height: 62px; margin-left: -10.3333px; margin-top: 0px; visibility: visible;">
 						</div>
@@ -28,10 +28,11 @@
 							<div class="food-cont">
 								<div class="j-foodname foodname">{{i.name}}</div>
 								<div class="food-desc">{{i.description}}</div>
-								<div class="food-price-region"> <span class="food-price">¥{{i.min_price}}</span> </div>
+								<div class="food-price-region"> <span class="food-price">¥{{i.min_price}}</span></div>
 								<div class="j-item-console foodop clearfix">
-									<a class="j-add-item add-food" href="javascript:;"><i class="icon i-add-food"></i></a> <span class="j-item-num foodop-num" style="display:none">0</span>
-									<a class="j-remove-item remove-food" style="display:none" href="javascript:;"><i class="icon i-remove-food"></i></a>
+									<a class="j-add-item add-food" href="javascript:;" @click="add(i.min_price,index)"><i class="icon i-add-food"></i></a>
+									<span class="j-item-num foodop-num" style="display:block">{{i.status}}</span>
+									<a class="j-remove-item remove-food" style="display:block" href="javascript:;" @click="reduce(i.min_price,index)"><i class="icon i-remove-food"></i></a>
 								</div>
 							</div>
 						</div>
@@ -48,7 +49,7 @@
 				<div class="j-cart-empty cart-empty">购物车空空如也～</div>
 			</div>
 			<div class="cart-btns">
-				<a class="cart-btn-unavail"><span class="inner">¥60起送</span></a>
+				<a class="cart-btn-unavail"><span class="inner">{{totalPrice}}¥60起送</span></a>
 			</div>
 		</div>
 	</div>
@@ -59,11 +60,12 @@
 		name: "orderDishes",
 		data() {
 			return {
+				num: 0,
 				taglist: [],
 				spus: [],
 				businessList: [],
 				businessName: [],
-				changeRed: -1
+				changeRed: -1,
 			}
 		},
 		mounted() {
@@ -95,6 +97,18 @@
 							}
 						}
 					})
+			},
+			add(price, index) {
+				this.spus[index].status++;
+				this.$store.dispatch('add', price)
+			},
+			reduce(price, index) {
+				if(this.spus[index].status > 0) {
+					this.spus[index].status--;
+				} else {
+
+				}
+				this.$store.dispatch('reduce', price)
 			}
 		},
 		created() {
@@ -108,6 +122,11 @@
 					}
 				})
 			this.change(100)
+		},
+		computed: {
+			totalPrice() {
+				return this.$store.getters.getTotalPrice
+			}
 		}
 	}
 </script>
@@ -361,17 +380,6 @@
 		float: right;
 	}
 	
-	.remove-food {
-		width: 0.921052rem;
-		text-align: right;
-	}
-	
-	.add-food,
-	.remove-food {
-		height: 0.921052rem;
-		float: right;
-	}
-	
 	.clearfix:after {
 		visibility: hidden;
 		display: block;
@@ -478,5 +486,22 @@
 	
 	.red span {
 		margin: 0 0.157894rem!important;
+	}
+	
+	.remove-food {
+		width: 35px;
+		text-align: right;
+	}
+	
+	.add-food,
+	.remove-food {
+		height: 35px;
+		float: right;
+	}
+	
+	.i-remove-food {
+		width: 28px;
+		height: 28px;
+		background-position: -16px -30px;
 	}
 </style>

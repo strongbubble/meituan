@@ -22,12 +22,8 @@ export default new VueRouter({
 	mode: 'history',
 	//这里写路由规则
 	routes: [
-		//这个payh就是router-link里的to跳转的地址
-		//commonpent就是根据路由地址，找到对应的组件，显示到router-view中
 		{
 			path: '',
-			//路由重定向
-			//			component: Home
 			redirect: 'home'
 		},
 		{
