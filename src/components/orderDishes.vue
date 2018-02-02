@@ -11,7 +11,7 @@
 			<!--左侧列表-->
 			<div class="taglist">
 				<ul>
-					<li v-for="list in taglist" @click="change(list.tag)">
+					<li v-for="(list,index) in taglist" @click="change(list.tag,index)" :class="{ red:changeRed == index}">
 						<span>{{list.name}}</span>
 					</li>
 				</ul>
@@ -22,7 +22,7 @@
 				<template v-for="list in taglist">
 					<div class="j-fooditem fooditem food615535498 clearfix" v-for="i in spus">
 						<div class="food-pic-wrap">
-							<img class="j-food-pic food-pic" src="http://p1.meituan.net/xianfu/3d9bd7a44412934f56a0f166cd232c4820422.jpg" visibility="hidden" style="width: 82.6667px; height: 62px; margin-left: -10.3333px; margin-top: 0px; visibility: visible;">
+							<img class="j-food-pic food-pic" :src=i.picture visibility="hidden" style="width: 82.6667px; height: 62px; margin-left: -10.3333px; margin-top: 0px; visibility: visible;">
 						</div>
 						<div class="food-cont-wrap">
 							<div class="food-cont">
@@ -44,16 +44,12 @@
 			<div class="cart-tip">
 				<div class="j-cart-icon cart-icon">
 					<i class="j-ico-cart ico-cart"></i>
-
 				</div>
 				<div class="j-cart-empty cart-empty">购物车空空如也～</div>
-
 			</div>
 			<div class="cart-btns">
-
 				<a class="cart-btn-unavail"><span class="inner">¥60起送</span></a>
 			</div>
-
 		</div>
 	</div>
 </template>
@@ -65,6 +61,9 @@
 			return {
 				taglist: [],
 				spus: [],
+				businessList: [],
+				businessName: [],
+				changeRed: -1
 			}
 		},
 		mounted() {
@@ -74,22 +73,39 @@
 			}
 		},
 		methods: {
-			change(tag) {
+			change(tag, index) {
+				this.changeRed = index;
+				this.axios.get('http://localhost:8888/getBusinessList')
+					.then(res => {
+						this.businessList = res.data
+						for(let tempBusiness of this.businessList) {
+							this.businessName.push(tempBusiness.businessName)
+						}
+					})
 				this.axios.get('http://localhost:8888/getDuckDetails')
 					.then(res => {
+						for(var j in res.data) {
+							if(j == this.$route.query.businessName) {
+								this.taglist = res.data[j].food_spu_tags
+							}
+						}
 						for(var i of this.taglist) {
 							if(tag == i.tag) {
 								this.spus = i.spus
-								console.log(this.spus)
 							}
 						}
 					})
 			}
 		},
 		created() {
+			console.log('-----------------', this.$route.query);
 			this.axios.get('http://localhost:8888/getDuckDetails')
 				.then(res => {
-					this.taglist = res.data.data.food_spu_tags
+					for(var j in res.data) {
+						if(j == this.$route.query.businessName) {
+							this.taglist = res.data[j].food_spu_tags
+						}
+					}
 				})
 			this.change(100)
 		}
@@ -177,6 +193,7 @@
 		display: flex;
 		justify-content: flex-start;
 		height: 17.552631rem;
+		background-color: #efefef;
 	}
 	
 	.taglist {
@@ -374,6 +391,7 @@
 		width: 85%;
 		height: auto;
 		overflow-y: scroll;
+		background: #fff;
 	}
 	
 	.cart {
@@ -448,5 +466,9 @@
 		-webkit-border-radius: 0;
 		-moz-border-radius: 0;
 		border-radius: 0;
+	}
+	
+	.red {
+		background: #fff;
 	}
 </style>

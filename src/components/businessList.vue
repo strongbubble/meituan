@@ -6,11 +6,12 @@
 		</header>
 		<nav>
 			<ul>
-				<router-link to="/businessList/orderDishes">
+				<router-link :to="'/businessList/orderDishes?businessName='+business.businessName">
 					<li @click="switchFn2('orderDishes')" :class="selectedO">
 						<a href="javascript:void(0);">点菜</a>
 					</li>
 				</router-link>
+
 				<router-link to="/businessList/evaluate">
 					<li @click="switchFn2('evaluate')" :class="selectedE">
 						<a href="javascript:void(0);">评价</a>
@@ -24,7 +25,6 @@
 			</ul>
 		</nav>
 		<router-view></router-view>
-
 	</div>
 </template>
 
@@ -75,6 +75,12 @@
 					for(var tempBusiness of this.businessList) {
 						if(this.$route.query.businessId == tempBusiness.businessId) {
 							this.business = tempBusiness
+							this.$router.push({
+								path: '/businessList/orderDishes',
+								query: {
+									businessName: this.business.businessName
+								}
+							})
 						}
 					}
 				})
