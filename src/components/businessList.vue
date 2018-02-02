@@ -6,7 +6,7 @@
 		</header>
 		<nav>
 			<ul>
-				<!--<router-link to="/businessList/orderDishes">
+				<router-link to="/businessList/orderDishes">
 					<li @click="switchFn2('orderDishes')" :class="selectedO">
 						<a href="javascript:void(0);">点菜</a>
 					</li>
@@ -20,25 +20,11 @@
 					<li @click="switchFn2('seller')" :class="selectedS">
 						<a href="javascript:void(0);">商家</a>
 					</li>
-				</router-link>-->
-				<router-link to="/businessList/orderDishes">
-					<li>
-						<a href="javascript:void(0);">点菜</a>
-					</li>
-				</router-link>
-				<router-link to="/businessList/evaluate">
-					<li>
-						<a href="javascript:void(0);">评价</a>
-					</li>
-				</router-link>
-				<router-link to="/businessList/seller">
-					<li>
-						<a href="javascript:void(0);">商家</a>
-					</li>
 				</router-link>
 			</ul>
 		</nav>
 		<router-view></router-view>
+
 	</div>
 </template>
 
@@ -48,7 +34,10 @@
 		data() {
 			return {
 				businessList: [],
-				business: ''
+				business: '',
+				selectedO: 'selected',
+				selectedE: 'rmSelected',
+				selectedS: 'rmSelected'
 			}
 		},
 		mounted() {
@@ -60,6 +49,21 @@
 		methods: {
 			back() {
 				this.$router.go(-1)
+			},
+			switchFn2(index) {
+				if(index == 'orderDishes') {
+					this.selectedO = 'selected'
+					this.selectedE = 'rmSelected'
+					this.selectedS = 'rmSelected'
+				} else if(index == 'evaluate') {
+					this.selectedO = 'rmSelected'
+					this.selectedE = 'selected'
+					this.selectedS = 'rmSelected'
+				} else if(index == 'seller') {
+					this.selectedO = 'rmSelected'
+					this.selectedE = 'rmSelected'
+					this.selectedS = 'selected'
+				}
 			}
 		},
 		created() {
@@ -74,7 +78,7 @@
 						}
 					}
 				})
-			},
+		},
 		computed: {
 			//business() {
 			//	for(var tempBusiness of this.businessList) {
@@ -86,7 +90,27 @@
 		}
 	}
 </script>
-
+<style lang="css">
+	header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 9999;
+		width: 100%;
+		height: 42px;
+		border-bottom: 1px solid #ffd705;
+		background: #fff;
+	}
+	
+	nav {
+		position: fixed;
+		top: 1.131578rem;
+		left: 0;
+		z-index: 9999;
+		width: 100%;
+		background: #fff;
+	}
+</style>
 <style lang="css" scoped>
 	.bussiness {
 		width: 100%;
@@ -114,10 +138,10 @@
 	}
 	
 	header span {
-		padding: 0 30px 0 8px;
+		padding: 0 0.789473rem 0 0.210526rem;
 		display: inline-block;
 		vertical-align: top;
-		margin-top: 11px;
+		margin-top: 0.289473rem;
 	}
 	
 	header span img {
@@ -132,6 +156,8 @@
 		height: auto;
 		background: #fff;
 		overflow: hidden;
+		height: 1.18421rem;
+		border-bottom: 1px solid #f0f0f0;
 	}
 	
 	nav ul li {
@@ -148,12 +174,12 @@
 		color: #666;
 	}
 	
-	nav ul li .selected a {
+	nav ul .selected a {
 		border-bottom: 4px solid #FFD161;
 		color: #333;
 	}
 	
-	nav ul li .rmSelected a {
+	nav ul .rmSelected a {
 		border-bottom: none;
 		color: #666;
 	}
