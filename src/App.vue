@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<div class="tabbar">
+		<div class="tabbar" v-show="isShow">
 			<router-link to="/home">
 				<div @click="switchFn('home')"><i class="bar-img" :class="barHomeImg"></i><span class="bar-btn-txt" :class="colorHome">首页</span></div>
 			</router-link>
@@ -26,6 +26,11 @@
 				colorHome: 'colorHome',
 				colorOrder: 'colorOrder',
 				colorMine: 'colorMine'
+			}
+		},
+		computed: {
+			isShow() {
+				return(this.$route.path.indexOf('/adress/') && this.$route.path.indexOf('/businessList/')) == -1 ? true : false
 			}
 		},
 		methods: {

@@ -469,6 +469,14 @@
 	}
 	
 	.red {
-		background: #fff;
+		color: #333;
+		background-color: #fff;
+		margin: 0!important;
+		border-right: 1px solid #fff;
+		border-bottom: 1px solid #fff!important;
+	}
+	
+	.red span {
+		margin: 0 0.157894rem!important;
 	}
 </style>
