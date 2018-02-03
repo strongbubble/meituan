@@ -45,16 +45,19 @@
 			<div class="cart-tip">
 				<div class="j-cart-icon cart-icon">
 					<i class="j-ico-cart ico-cart" :class="icoCartActive"></i>
+					<div class="j-cart-num cart-num" :class="nShow" style="display: none;">{{n}}</div>
 				</div>
-				<!--<div class="j-cart-empty cart-empty">{{totalPrice}}购物车空空如也～</div>-->
-				<div class="j-cart-noempty cart-noempty">
-					<span class="j-cart-price cart-price">{{totalPrice}}</span>
+				<div class="j-cart-empty cart-empty" :class="display" style="display: block;">购物车空空如也～</div>
+				<div class="j-cart-noempty cart-noempty" style="display: none;" :class="display2">
+					<span class="j-cart-price cart-price">¥{{totalPrice}}</span>
 					<br>
 					<span class="cart-shipping">配送费以订单为准</span>
 				</div>
 			</div>
 			<div class="cart-btns">
-				<a class="cart-btn-unavail"><span class="inner">¥60起送</span></a>
+				<a class="cart-btn-confirm j-cart-btn-confirm" href="javascript:;" :class="shop" style="display: none;"><span class="inner">去结算</span></a>
+				<a class="cart-btn-unavail" :class="nShow2" style="display: none;"><span class="inner">还差¥{{a}}</span></a>
+				<a class="cart-btn-unavail"><span class="inner">¥{{originPrice}}起送</span></a>
 			</div>
 		</div>
 	</div>
@@ -68,11 +71,19 @@
 				num: 0,
 				taglist: [],
 				spus: [],
+				poi_info: [],
 				businessList: [],
 				businessName: [],
 				changeRed: -1,
 				icoCartActive: '',
-				show: ''
+				originPrice: '',
+				display: '',
+				display2: '',
+				nShow: '',
+				nShow2: '',
+				shop: '',
+				a: 0,
+				b: 0
 			}
 		},
 		mounted() {
@@ -110,12 +121,21 @@
 					})
 			},
 			add(price, index) {
+				console.log('--')
 				this.spus[index].show = true
 				this.spus[index].showStatus = true
 				this.spus[index].status++;
 				this.icoCartActive = 'ico-cart-active'
 				this.$store.dispatch('add', price)
-				this.numNew = this.spus[index].status
+				this.display = "display"
+				this.display2 = "display2"
+				this.nShow = "nShow"
+				this.nShow2 = "nShow2"
+				this.a = this.originPrice - this.totalPrice
+				if(this.totalPrice >= this.originPrice) {
+					this.shop = 'shop'
+				}
+
 			},
 			reduce(price, index) {
 				if(this.spus[index].status > 0) {
@@ -124,9 +144,18 @@
 				if(this.spus[index].status == 0) {
 					this.spus[index].show = false
 					this.spus[index].showStatus = false
-					this.icoCartActive = ''
+					this.display = ""
+					this.display2 = ""
 				}
 				this.$store.dispatch('reduce', price)
+				this.a = this.originPrice - this.totalPrice
+				if(this.totalPrice < this.originPrice) {
+					this.shop = ''
+					this.a = this.originPrice - this.totalPrice
+				}
+				if(this.n == '0') {
+					this.nShow = ""
+				}
 			}
 		},
 		created() {
@@ -136,19 +165,22 @@
 					for(var j in res.data) {
 						if(j == this.$route.query.businessName) {
 							this.taglist = res.data[j].food_spu_tags
+							this.originPrice = res.data[j].poi_info.min_price_tip
 						}
 					}
 				})
 			this.change(100)
 		},
 		computed: {
-			totalPrice() {
-				return this.$store.getters.getTotalPrice
+			n() {
+				if(this.$store.getters.getTotaln == 0) {
+					this.icoCartActive = ''
+				}
+				return this.$store.getters.getTotaln
 			},
-			isShow() {
-				//console.log(this.numNew)
-				//return this.numNew > 0 ? true : false
-			}
+			totalPrice() {
+				return this.$store.getters.getTotalPrice == '0.0' ? 0 : this.$store.getters.getTotalPrice
+			},
 		}
 	}
 </script>
@@ -160,6 +192,33 @@
 <style lang="css" scoped>
 	h1 {
 		color: red;
+	}
+	
+	.shop {
+		display: block!important;
+	}
+	
+	.nShow {
+		display: block!important;
+	}
+	
+	.nShow2 {
+		display: block!important;
+	}
+	
+	.display {
+		display: none!important;
+	}
+	
+	.display2 {
+		display: block!important;
+	}
+	
+	.cart-shipping {
+		display: block;
+		font-size: 12px;
+		margin-left: 4px;
+		margin-top: -7px;
 	}
 	
 	nav,
@@ -264,7 +323,7 @@
 		left: 0;
 		top: 50%;
 		width: 100%;
-		padding-left: 8px;
+		padding-left: 0.210526rem;
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
@@ -429,14 +488,14 @@
 		bottom: 0;
 		z-index: 9000;
 		width: 100%;
-		height: 50px;
+		height: 1.315789rem;
 		background-color: rgba(51, 51, 51, 0.9);
 		border-top: 1px solid #cacaca;
 	}
 	
 	.cart-tip {
 		color: #999;
-		padding-left: 12px;
+		padding-left: 0.315789rem;
 	}
 	
 	.cart-btns {
@@ -450,12 +509,12 @@
 		float: left;
 		position: relative;
 		top: -18px;
-		margin-right: 10px;
+		margin-right: 0.263157rem;
 	}
 	
 	.cart-empty {
-		line-height: 50px;
-		font-size: 13px;
+		line-height: 1.315789rem;
+		font-size: 0.342105rem;
 		color: #888;
 	}
 	
@@ -466,12 +525,12 @@
 	.ico-cart,
 	.spec-ico-cart {
 		display: block;
-		width: 50px;
-		height: 57px;
+		width: 1.315789rem;
+		height: 1.5rem;
 		background: url(//xs01.meituan.net/waimai_i/img/cart.ab827c23.png) no-repeat;
-		-webkit-background-size: 50px auto;
-		-moz-background-size: 50px auto;
-		background-size: 50px auto;
+		-webkit-background-size: 1.315789rem auto;
+		-moz-background-size: 1.315789rem auto;
+		background-size: 1.315789rem auto;
 	}
 	
 	.cart-btn-confirm,
@@ -488,10 +547,10 @@
 	.cart-btn-confirm .inner,
 	.cart-btn-unavail .inner {
 		display: block;
-		width: 110px;
-		height: 50px;
-		line-height: 50px;
-		font-size: 16px;
+		width: 2.894736rem;
+		height: 1.315789rem;
+		line-height: 1.315789rem;
+		font-size: 0.421052rem;
 		text-align: center;
 		-webkit-border-radius: 0;
 		-moz-border-radius: 0;
@@ -511,19 +570,35 @@
 	}
 	
 	.remove-food {
-		width: 35px;
+		width: 0.921052rem;
 		text-align: right;
+	}
+	
+	.cart-num {
+		border-radius: 50% 50%;
+		background-color: #FB4E44;
+		width: 0.526315rem;
+		height: 0.526315rem;
+		line-height: 0.473684rem;
+		font-size: 0.315789rem;
+		font-size: 0.315789rem;
+		text-align: center;
+		position: absolute;
+		top: 0.052631rem;
+		right: 0;
+		color: #fff;
+		border: 1px solid #fff;
 	}
 	
 	.add-food,
 	.remove-food {
-		height: 35px;
+		height: 0.921052rem;
 		float: right;
 	}
 	
 	.i-remove-food {
-		width: 28px;
-		height: 28px;
+		width: 0.736842rem;
+		height: 0.736842rem;
 		background-position: -16px -30px;
 	}
 	
@@ -532,9 +607,14 @@
 	}
 	
 	.cart-price {
-		font-size: 20px;
-		margin-left: 4px;
+		font-size: 0.526315rem;
+		margin-left: 0.105263rem;
 		color: #fff;
-		line-height: 35px;
+		line-height: 0.921052rem;
+	}
+	
+	.cart-btn-confirm .inner {
+		background-color: #FFD161;
+		color: #333;
 	}
 </style>

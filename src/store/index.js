@@ -4,17 +4,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		totalPrice: 0
+		totalPrice: 0,
+		n: 0,
 	},
 	mutations: {
 		ADD(state, price) {
-			state.totalPrice += price
+			state.n++
+				state.totalPrice += price
 		},
 		REDUCE(state, price) {
 			if(state.totalPrice > 0) {
 				state.totalPrice -= price
+				state.n--
 			} else {
 				state.totalPrice = 0
+				state.n = 0
 			}
 		}
 	},
@@ -28,7 +32,10 @@ export default new Vuex.Store({
 	},
 	getters: {
 		getTotalPrice(state) {
-			return "￥" + state.totalPrice
+			return state.totalPrice.toFixed(1)
+		},
+		getTotaln(state) {
+			return state.n
 		}
 	}
 })
