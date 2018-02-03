@@ -30,9 +30,9 @@
 								<div class="food-desc">{{i.description}}</div>
 								<div class="food-price-region"> <span class="food-price">¥{{i.min_price}}</span></div>
 								<div class="j-item-console foodop clearfix">
-									<a class="j-add-item add-food" href="javascript:;" @click="add(i.min_price,index)"><i class="icon i-add-food"></i></a>
+									<a class="j-add-item add-food" href="javascript:;" @click="add(i.min_price,i.id,index)"><i class="icon i-add-food"></i></a>
 									<span class="j-item-num foodop-num" v-show="i.showStatus">{{i.status}}</span>
-									<a class="j-remove-item remove-food" v-show="i.show" href="javascript:;" @click="reduce(i.min_price,index)"><i class="icon i-remove-food"></i></a>
+									<a class="j-remove-item remove-food" v-show="i.show" href="javascript:;" @click="reduce(i.min_price,i.name,index)"><i class="icon i-remove-food"></i></a>
 								</div>
 							</div>
 						</div>
@@ -55,7 +55,9 @@
 				</div>
 			</div>
 			<div class="cart-btns">
-				<a class="cart-btn-confirm j-cart-btn-confirm" href="javascript:;" :class="shop" style="display: none;"><span class="inner">去结算</span></a>
+				<router-link :to="'/payment?businessName='+ $route.query.businessName +'&checked='+ checked">
+					<a class="cart-btn-confirm j-cart-btn-confirm" href="javascript:;" :class="shop" style="display: none;"><span class="inner">去结算</span></a>
+				</router-link>
 				<a class="cart-btn-unavail" :class="nShow2" style="display: none;"><span class="inner">还差¥{{a}}</span></a>
 				<a class="cart-btn-unavail"><span class="inner">¥{{originPrice}}起送</span></a>
 			</div>
@@ -83,7 +85,8 @@
 				nShow2: '',
 				shop: '',
 				a: 0,
-				b: 0
+				b: 0,
+				checked:[],
 			}
 		},
 		mounted() {
@@ -120,7 +123,7 @@
 						}
 					})
 			},
-			add(price, index) {
+			add(price,id,index) {
 				console.log('--')
 				this.spus[index].show = true
 				this.spus[index].showStatus = true
@@ -134,10 +137,13 @@
 				this.a = this.originPrice - this.totalPrice
 				if(this.totalPrice >= this.originPrice) {
 					this.shop = 'shop'
+					this.a = 0
 				}
-
+				this.checked.push(id)
 			},
-			reduce(price, index) {
+			
+			reduce(price,id,index) {
+			this.checked.splice(index,1)
 				if(this.spus[index].status > 0) {
 					this.spus[index].status--;
 				}
@@ -149,7 +155,7 @@
 				}
 				this.$store.dispatch('reduce', price)
 				this.a = this.originPrice - this.totalPrice
-				if(this.totalPrice < this.originPrice) {
+				if((this.totalPrice - this.originPrice) <= 0) {
 					this.shop = ''
 					this.a = this.originPrice - this.totalPrice
 				}

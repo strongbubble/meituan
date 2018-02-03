@@ -2,7 +2,7 @@
 	<div class="bussiness">
 		<header>
 			<span @click="back"><img src="../../static/images/返回.png"/></span>
-			<p class="bussinessTit">{{business.businessName}}</p>
+			<p class="bussinessTit">{{$route.query.businessName}}</p>
 		</header>
 		<nav>
 			<ul>
@@ -37,7 +37,8 @@
 				business: '',
 				selectedO: 'selected',
 				selectedE: 'rmSelected',
-				selectedS: 'rmSelected'
+				selectedS: 'rmSelected',
+				businessName: ''
 			}
 		},
 		mounted() {
@@ -52,6 +53,7 @@
 					path: '/home'
 				})
 			}
+
 		},
 		switchFn2(index) {
 			if(index == 'orderDishes') {
