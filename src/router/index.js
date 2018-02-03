@@ -16,13 +16,14 @@ import Evaluate from '../components/evaluate'
 import Seller from '../components/seller'
 import Adress from '../components/adress'
 import Add from '../components/add'
+import LoginMeituan from '../components/loginMeituan'
+import LoginPhone from '../components/loginPhone'
 //创建路由实例，并且配置路由规则,并且导出
 export default new VueRouter({
 	// 配置H5的history模式，这样URL会好看些
 	mode: 'history',
 	//这里写路由规则
-	routes: [
-		{
+	routes: [{
 			path: '',
 			redirect: 'home'
 		},
@@ -41,8 +42,7 @@ export default new VueRouter({
 		{
 			path: '/businessList',
 			component: BusinessList,
-			children: [
-				{
+			children: [{
 					path: '',
 					redirect: 'orderDishes'
 				},
@@ -62,7 +62,20 @@ export default new VueRouter({
 		},
 		{
 			path: '/logIn',
-			component: LogIn
+			component: LogIn,
+			children: [{
+					path: '',
+					redirect: 'loginPhone'
+				},
+				{
+					path: 'loginPhone',
+					component: LoginPhone
+				},
+				{
+					path: 'loginMeituan',
+					component: LoginMeituan
+				}
+			]
 		},
 		{
 			path: '*',
