@@ -18,6 +18,7 @@ import Adress from '../components/adress'
 import Add from '../components/add'
 import LoginMeituan from '../components/loginMeituan'
 import LoginPhone from '../components/loginPhone'
+import Payment from '../components/payment'
 //创建路由实例，并且配置路由规则,并且导出
 export default new VueRouter({
 	// 配置H5的history模式，这样URL会好看些
@@ -25,23 +26,28 @@ export default new VueRouter({
 	//这里写路由规则
 	routes: [{
 			path: '',
-			redirect: 'home'
+			redirect: 'home',
+			meta: { navShow: true, cname: '一级页面' },
 		},
 		{
 			path: '/home',
-			component: Home
+			component: Home,
+			meta: { navShow: true, cname: '一级页面' },
 		},
 		{
 			path: '/order',
-			component: Order
+			component: Order,
+			meta: { navShow: true, cname: '一级页面' },
 		},
 		{
 			path: '/mine',
-			component: Mine
+			component: Mine,
+			meta: { navShow: true, cname: '一级页面' },
 		},
 		{
 			path: '/businessList',
 			component: BusinessList,
+			meta: { navShow: false, cname: '二级页面' },
 			children: [{
 					path: '',
 					redirect: 'orderDishes'
@@ -88,7 +94,10 @@ export default new VueRouter({
 		{
 			path: '/add',
 			component: Add
+		},
+		{
+			path: '/payment',
+			component: Payment
 		}
-
 	]
 })
