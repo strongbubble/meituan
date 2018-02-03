@@ -5,35 +5,35 @@
 
 		</div>
 		<div id="order_list">
-			<div id="div1">
+			<div v-for="list in myList" id="div1">
 				<div id="div_head">
 					<img src="../../static/order_img/img_1.jpg"/>
 					<div class="right_">
-						<a href="#">金鑫烧烤</a>
+						<a href="#">{{ list.poi_name }}</a>
 						<span>订单完成</span>
 						
 					</div>
 					
 				</div>
 				<div class="div_center">
-					<ul>
+					<ul v-for="list1 in list.product_list">
 						<li>
-							<span>鸡心(5串一份)</span>
-							<span>x1</span>
+							<span>{{ list1.product_name }}</span>
+							<span>{{ list1.product_count }}</span>
 						</li>
-						<li>
+						<!--<li>
 							<span>烤小腰</span>
 							<span>x1</span>
 						</li>
 						<li>
 							<span>鸡胗(5串一份)</span>
 							<span>x1</span>
-						</li>
-						<li>
-							<span>...</span>
-							<span>总计6个菜,实付¥33.00</span>
-						</li>
+						</li> -->
 					</ul>
+						<li v-for="list2 in list.product_list">
+							<!-- <span>...</span> -->
+							<span>{{ list2.total }}</span>
+						</li> 
 				</div>
 				<div class="div_bottom">
 					<button id="btn_1">评价</button>
@@ -41,44 +41,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="order_list">
-			<div id="div1">
-				<div id="div_head">
-					<img src="../../static/order_img/img_1.jpg"/>
-					<div class="right_">
-						<a href="#">金鑫烧烤</a>
-						<span>订单完成</span>
-						
-					</div>
-					
-				</div>
-				<div class="div_center">
-					<ul>
-						<li>
-							<span>鸡心(5串一份)</span>
-							<span>x1</span>
-						</li>
-						<li>
-							<span>烤小腰</span>
-							<span>x1</span>
-						</li>
-						<li>
-							<span>鸡胗(5串一份)</span>
-							<span>x1</span>
-						</li>
-						<li>
-							<span>...</span>
-							<span>总计6个菜,实付¥33.00</span>
-						</li>
-					</ul>
-				</div>
-				<div class="div_bottom">
-					<button id="btn_1">评价</button>
-					<button>再来一单</button>
-				</div>
-			</div>
-		</div>
-
+		
 	</div>
 </template>
 
@@ -88,7 +51,8 @@
 		name: "order",
 		data() {
 			return {
-				msg: '订单'
+				msg: '订单',
+				myList: []
 			}
 		},
 		mounted() {
@@ -96,6 +60,19 @@
 			window.onresize = function() {
 				document.documentElement.style.fontSize = innerWidth / 10 + "px";
 			}
+		},
+		created() {
+			this.axios.get('http://localhost:8888/getList')
+			.then(res => {
+				// this.myList = res.data.data.digestlist
+				// console.log(this.myList);
+				for (const list of res.data.data.digestlist) {
+					this.myList.push(list);
+				}
+				console.log(this.myList);
+				
+
+			});
 		}
 
 	}

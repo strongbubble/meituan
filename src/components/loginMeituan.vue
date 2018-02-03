@@ -16,8 +16,9 @@
        </table>
        </div>
         <router-link to="/order">
-			<button id="login1">登录</button>
+			<button @click="login" id="login1">登录</button>
 	    </router-link>
+	    
 
     </div>
 </template>
@@ -30,12 +31,20 @@ export default {
            msg: '美团登录'  
         };
     },
+    
     mounted() {
 			document.documentElement.style.fontSize = innerWidth / 10 + "px";
 			window.onresize = function() {
 				document.documentElement.style.fontSize = innerWidth / 10 + "px";
 			}
-		}
+        },
+    methods: {
+        login() {
+            console.log('222');
+        }
+    }
+	
+	
 }
 </script>
     

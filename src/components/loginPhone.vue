@@ -26,7 +26,7 @@
 			
 		</div>
 			<router-link to="/order">
-			<button id="login">登录</button>
+			<button @click="login" id="login">登录</button>
 			</router-link>
     </div>
 </template>
@@ -44,7 +44,13 @@ export default {
 			window.onresize = function() {
 				document.documentElement.style.fontSize = innerWidth / 10 + "px";
 			}
+		},
+	methods: {
+		login() {
+			console.log('111');
 		}
+	}
+		
 }
 </script>
     

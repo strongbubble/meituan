@@ -10,7 +10,7 @@
 			<h3 @click="switcher1" id="h31">手机登录验证</h3>
 		</router-link>
 		<router-link to="/logIn/loginMeituan">
-			<h3 :style="styleObj" id="h32" @click="switcher2">美团账号验证</h3>
+			<h3 :class="{class1: !isBorder}" id="h32" @click="switcher2">美团账号验证</h3>
 		
 		</router-link>
 		
@@ -27,9 +27,8 @@
 		data() {
 			return {
 				msg: '登录',
-				styleObj: {
-					'border-bottom': ''
-				}
+				className: 'class1',
+				isBorder: false
 			};
 		},
 		mounted() {
@@ -42,12 +41,11 @@
 		},
 		methods: {
 			switcher2() {
-				console.log(this);
-				this.styleObj['border-bottom'] = 'none'
+				this.isBorder = false;
 				
 			},
 			switcher1() {
-				this.styleObj['border-bittom'] = '.026316rem solid #ddd8ce'
+				
 			}
 		}
 
@@ -55,6 +53,11 @@
 </script>
 
 <style lang="css" scoped>
+	.class{
+		background-color: red
+	}
+
+
 	#id1 {
 		width: 100%;
 
