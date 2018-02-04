@@ -35,7 +35,7 @@
 							<div class="food-item-info">
 								<p class="food-item-name">{{show.name}}</p>
 								<p class="food-item-subdtl">{{show.unit}}</p>
-								<p class="food-item-num">×1</p>
+								<p class="food-item-num">×{{show.numbers}}</p>
 							</div>
 						</div>
 					</div>
@@ -99,17 +99,25 @@
 			window.onresize = function() {
 				document.documentElement.style.fontSize = innerWidth / 10 + "px";
 			}
+
 			this.axios.get('http://localhost:8888/getDuckDetails').then(res => {
-				for(var i of this.$route.query.checked.split(",")) {
-					this.checked.push(i)
+				//商品id
+				var shopList = JSON.parse(this.$route.query.checked)
+				for(var i of shopList) {
+					var obj = {}
+					obj.id = i.id
+					obj.numbers = i.numbers
+					this.checked.push(obj)
+					console.log(this.checked)
 				}
+				//商品信息
 				for(var j in res.data) {
 					if(j == this.$route.query.businessName) {
-						for(var i in j) {
+						for(var i in res.data[j].food_spu_tags) {
 							this.poi_info = res.data[j].poi_info.shipping_fee_tip
 							for(var m of res.data[j].food_spu_tags[i].spus) {
 								for(var g in this.checked) {
-									if(this.checked[g] == m.id) {
+									if(this.checked[g].id == m.id) {
 										this.showArr.push(m)
 									}
 								}
@@ -117,6 +125,31 @@
 						}
 					}
 				}
+				//去重
+				var temp = this.showArr
+				var item = []
+				for(var i = 0; i < this.showArr.length; i++) {
+					item.push(this.showArr[i].id)
+				}
+				item = Array.from(new Set(item));
+				var last = []
+				for(var i = 0; i < item.length; i++) {
+					var obj = {}
+					for(var j = 0; j < temp.length; j++) {
+						if(item[i] === temp[j].id) {
+							obj.picture = temp[j].picture
+							obj.min_price = temp[j].min_price
+							obj.name = temp[j].name
+							obj.unit = temp[j].unit
+							obj.id = temp[j].id
+							if(item[i] == this.checked[i].id){
+								obj.numbers = this.checked[i].numbers
+							}
+						}
+					}
+					last.push(obj)
+				}
+				this.showArr = last
 			})
 		},
 		methods: {

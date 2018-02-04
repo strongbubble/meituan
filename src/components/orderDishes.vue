@@ -32,7 +32,7 @@
 								<div class="j-item-console foodop clearfix">
 									<a class="j-add-item add-food" href="javascript:;" @click="add(i.min_price,i.id,index)"><i class="icon i-add-food"></i></a>
 									<span class="j-item-num foodop-num" v-show="i.showStatus">{{i.status}}</span>
-									<a class="j-remove-item remove-food" v-show="i.show" href="javascript:;" @click="reduce(i.min_price,i.name,index)"><i class="icon i-remove-food"></i></a>
+									<a class="j-remove-item remove-food" v-show="i.show" href="javascript:;" @click="reduce(i.min_price,i.id,index)"><i class="icon i-remove-food"></i></a>
 								</div>
 							</div>
 						</div>
@@ -55,7 +55,7 @@
 				</div>
 			</div>
 			<div class="cart-btns">
-				<router-link :to="'/payment?businessName='+ $route.query.businessName +'&checked='+ checked">
+				<router-link :to="'/payment?businessName='+ $route.query.businessName +'&checked='+ JSON.stringify(checked)">
 					<a class="cart-btn-confirm j-cart-btn-confirm" href="javascript:;" :class="shop" style="display: none;"><span class="inner">去结算</span></a>
 				</router-link>
 				<a class="cart-btn-unavail" :class="nShow2" style="display: none;"><span class="inner">还差¥{{a}}</span></a>
@@ -86,7 +86,7 @@
 				shop: '',
 				a: 0,
 				b: 0,
-				checked:[],
+				checked: [],
 			}
 		},
 		mounted() {
@@ -123,7 +123,7 @@
 						}
 					})
 			},
-			add(price,id,index) {
+			add(price, id, index) {
 				console.log('--')
 				this.spus[index].show = true
 				this.spus[index].showStatus = true
@@ -139,11 +139,33 @@
 					this.shop = 'shop'
 					this.a = 0
 				}
-				this.checked.push(id)
+
+				//id与数量
+				var obj = {}
+				obj.id = id
+				obj.numbers = 1
+				if(this.returnTrue(id, this.checked)) {
+					for(var i = 0; i < this.checked.length; i++) {
+						if(this.checked[i].id == id) {
+							this.checked[i].numbers++
+						}
+					}
+				} else {
+					this.checked.push(obj)
+				}
+				console.log('加', this.checked)
 			},
-			
-			reduce(price,id,index) {
-			this.checked.splice(index,1)
+			returnTrue(id, arr) {
+				if(arr.length > 0) {
+					for(var i = 0; i < arr.length; i++) {
+						if(arr[i].id == id) {
+							return true
+						}
+					}
+					return false
+				}
+			},
+			reduce(price, id, index) {
 				if(this.spus[index].status > 0) {
 					this.spus[index].status--;
 				}
@@ -162,6 +184,18 @@
 				if(this.n == '0') {
 					this.nShow = ""
 				}
+				if(this.returnTrue(id, this.checked)) {
+					for(var i = 0; i < this.checked.length; i++) {
+						if(this.checked[i].id == id) {
+							this.checked[i].numbers--
+						}
+						if(this.checked[i].numbers == 0) {
+							this.checked.splice(i, 1)
+						}
+					}
+				}
+				console.log('减', this.checked)
+
 			}
 		},
 		created() {
