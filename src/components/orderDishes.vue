@@ -98,14 +98,14 @@
 		methods: {
 			change(tag, index) {
 				this.changeRed = index;
-				this.axios.get('http://localhost:8888/getBusinessList')
+				this.axios.get('http://10.0.157.220:8888/getBusinessList')
 					.then(res => {
-						this.businessList = res.data
+						this.businessList = res.data.shop_data
 						for(let tempBusiness of this.businessList) {
 							this.businessName.push(tempBusiness.businessName)
 						}
 					})
-				this.axios.get('http://localhost:8888/getDuckDetails')
+				this.axios.get('http://10.0.157.220:8888/getDuckDetails')
 					.then(res => {
 						for(var j in res.data) {
 							if(j == this.$route.query.businessName) {
@@ -134,12 +134,13 @@
 				this.display2 = "display2"
 				this.nShow = "nShow"
 				this.nShow2 = "nShow2"
+				//差价计算
 				this.a = this.originPrice - this.totalPrice
-				if(this.totalPrice >= this.originPrice) {
+				this.a = this.a.toFixed(1)
+				if(this.a <= 0) {
 					this.shop = 'shop'
 					this.a = 0
 				}
-
 				//id与数量
 				var obj = {}
 				obj.id = id
@@ -176,10 +177,12 @@
 					this.display2 = ""
 				}
 				this.$store.dispatch('reduce', price)
+				//差价计算
 				this.a = this.originPrice - this.totalPrice
-				if((this.totalPrice - this.originPrice) <= 0) {
+				if(this.a >= 0) {
 					this.shop = ''
 					this.a = this.originPrice - this.totalPrice
+					this.a = this.a.toFixed(1)
 				}
 				if(this.n == '0') {
 					this.nShow = ""
@@ -195,12 +198,10 @@
 					}
 				}
 				console.log('减', this.checked)
-
 			}
 		},
 		created() {
-			console.log('-----------------', this.$route.query);
-			this.axios.get('http://localhost:8888/getDuckDetails')
+			this.axios.get('http://10.0.157.220:8888/getDuckDetails?pageNum=1&pageSize=2')
 				.then(res => {
 					for(var j in res.data) {
 						if(j == this.$route.query.businessName) {
@@ -219,7 +220,7 @@
 				return this.$store.getters.getTotaln
 			},
 			totalPrice() {
-				return this.$store.getters.getTotalPrice == '0.0' ? 0 : this.$store.getters.getTotalPrice
+				return this.$store.getters.getTotalPrice
 			},
 		}
 	}
