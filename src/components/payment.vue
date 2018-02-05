@@ -142,7 +142,7 @@
 							obj.name = temp[j].name
 							obj.unit = temp[j].unit
 							obj.id = temp[j].id
-							if(item[i] == this.checked[i].id){
+							if(item[i] == this.checked[i].id) {
 								obj.numbers = this.checked[i].numbers
 							}
 						}
