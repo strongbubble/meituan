@@ -111,7 +111,7 @@
 		created() {
 			this.axios.get('http://10.0.157.220:8888/getBusinessList?pageNum=1&pageSize=2')
 				.then(res => {
-					console.log(res.data.total_count)
+					console.log(res.data.shop_data)
 					this.businessList = res.data.shop_data
 				})
 		},
