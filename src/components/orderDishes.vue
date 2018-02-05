@@ -98,14 +98,14 @@
 		methods: {
 			change(tag, index) {
 				this.changeRed = index;
-				this.axios.get('http://localhost:8888/getBusinessList')
+				this.axios.get('http://10.0.157.220:8888/getBusinessList')
 					.then(res => {
 						this.businessList = res.data
 						for(let tempBusiness of this.businessList) {
 							this.businessName.push(tempBusiness.businessName)
 						}
 					})
-				this.axios.get('http://localhost:8888/getDuckDetails')
+				this.axios.get('http://10.0.157.220:8888/getDuckDetails')
 					.then(res => {
 						for(var j in res.data) {
 							if(j == this.$route.query.businessName) {
@@ -200,7 +200,7 @@
 		},
 		created() {
 			console.log('-----------------', this.$route.query);
-			this.axios.get('http://localhost:8888/getDuckDetails')
+			this.axios.get('http://10.0.157.220:8888/getDuckDetails')
 				.then(res => {
 					for(var j in res.data) {
 						if(j == this.$route.query.businessName) {

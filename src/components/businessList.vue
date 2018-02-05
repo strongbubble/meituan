@@ -71,7 +71,7 @@
 			}
 		},
 		created() {
-			this.axios.get('http://localhost:8888/getBusinessList')
+			this.axios.get('http://10.0.157.220:8888/getBusinessList')
 				.then(res => {
 					this.businessList = res.data
 					for(var tempBusiness of this.businessList) {
