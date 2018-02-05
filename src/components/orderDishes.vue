@@ -100,7 +100,7 @@
 				this.changeRed = index;
 				this.axios.get('http://10.0.157.220:8888/getBusinessList')
 					.then(res => {
-						this.businessList = res.data
+						this.businessList = res.data.shop_data
 						for(let tempBusiness of this.businessList) {
 							this.businessName.push(tempBusiness.businessName)
 						}
@@ -201,7 +201,7 @@
 			}
 		},
 		created() {
-			this.axios.get('http://10.0.157.220:8888/getDuckDetails')
+			this.axios.get('http://10.0.157.220:8888/getDuckDetails?pageNum=1&pageSize=2')
 				.then(res => {
 					for(var j in res.data) {
 						if(j == this.$route.query.businessName) {

@@ -71,9 +71,9 @@
 			}
 		},
 		created() {
-			this.axios.get('http://10.0.157.220:8888/getBusinessList')
+			this.axios.get('http://10.0.157.220:8888/getBusinessList?pageNum=1&pageSize=2')
 				.then(res => {
-					this.businessList = res.data
+					this.businessList = res.data.shop_data
 					for(var tempBusiness of this.businessList) {
 						if(this.$route.query.businessId == tempBusiness.businessId) {
 							this.business = tempBusiness
