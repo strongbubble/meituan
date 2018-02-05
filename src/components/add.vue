@@ -12,35 +12,33 @@
 		</header>
 		<!--主体-->
 		<div class="mine">
-			<dl>
-				<dt>联系人</dt>
-				<dd>
-					<table class="my_tab">
-						<tr>
-							<td class="one">姓名:</td> 
-							<td class="two"><input type="text" placeholder="请填写收货人姓名"/></td>
-						<tr>
-						<tr>
-							<td class="one"></td>
-							<td class="two">							
-								<input type="radio" name="gender" checked/>先生
-								<input type="radio" name="gender"/>女士
-							</td>
-						</tr>
-						<tr>
-							<td class="one">电话:</td>
-							<td class="two"><input type="text" placeholder="请填写收货手机号码" /></td>
-						</tr>
-					</table>
-				</dd>
-			</dl>
+			<h3>联系人</h3>
+			<div class="adres">
+				<table>
+					<tr>
+						<td class="one">姓名</td>
+						<td class="two"><input type="text" placeholder="请填写收货人姓名" /></td>
+					</tr>
+					<tr>
+						<td class="one"></td>
+						<td>
+							<div class="men"></div><span>男</span>
+							<div class="women"></div><span>女</span>
+						</td>
+					</tr>
+					<tr>
+						<td>电话</td>
+						<td><input type="text" placeholder="请填写收货人姓名" /></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 	export default {
-    name: "notFound",
+    name: "add",
     data () {
         return {
              
@@ -112,30 +110,13 @@
 		text-align: center;
 	}
 	/*       主体                  */
-	.mine dt{
+	.mine h3{
 		height: 0.92rem;
 		line-height: 0.92rem;
-		width: 100%;
 		padding-left: 0.39rem;
 		font-size: 0.31rem;
 		background: #eee;
+		font-weight: normal;
 		color: #666;
-	}
-	.mine dd{
-		background: #fff;
-	}
-	.one{
-		width: 1.31rem;
-		line-height: 1.15rem;
-		font-size: 0.36rem;
-		padding-left: 0.39rem;
-	}
-	.two input{
-		/*width: 100%;*/
-		height: 1.15rem;
-		border: 0;
-		font-size: 0.36rem;
-		border-bottom: 1px solid #e4e4e4;
-		border-spacing: border-box;
 	}
 </style>
