@@ -19,6 +19,7 @@ import Add from '../components/add'
 import LoginMeituan from '../components/loginMeituan'
 import LoginPhone from '../components/loginPhone'
 import Payment from '../components/payment'
+import Search from '../components/search'
 //创建路由实例，并且配置路由规则,并且导出
 export default new VueRouter({
 	// 配置H5的history模式，这样URL会好看些
@@ -98,6 +99,10 @@ export default new VueRouter({
 		{
 			path: '/payment',
 			component: Payment
+		},
+		{
+			path: '/search',
+			component: Search
 		}
 	]
 })

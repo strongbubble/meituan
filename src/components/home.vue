@@ -8,10 +8,10 @@
 					<span class="loc-text">北京市</span>
 					<i class="jt"></i>
 				</a>
-				<a href="#" class="header-serch">
+				<router-link to="/search" class="header-serch">
 					<i class="ss"></i>
 					<span class="serch-text">鸡排</span>
-				</a>
+				</router-link>
 			</div>
 			<div class="h-wrap">
 				<a>
@@ -165,13 +165,12 @@
 								this.loading = true;
 							} else {
 								this.loading = false;
-								this.display = 'none'
 							}
-							if(this.businessList.length == 20) {
-								this.display = 'none'
-							} else {
-								this.display = 'block'
-							}
+						if(this.businessList.length == 20) {
+							this.display = 'none'
+						} else {
+							this.display = 'block'
+						}
 					})
 			}
 		},
@@ -186,6 +185,7 @@
 </script>
 <style lang="css" scoped>
 	/*头部*/
+	
 	header {
 		position: relative;
 		width: 100%;
@@ -580,7 +580,6 @@
 		background: url(../../static/images/loading36.gif) no-repeat 40% center;
 		background-size: 0.526315rem 0.526315rem;
 		text-indent: 48%;
-		
 	}
 	
 	.backtotop {
