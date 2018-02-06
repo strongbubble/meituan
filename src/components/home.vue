@@ -99,8 +99,6 @@
 
 <script>
 	import Vue from 'vue'
-	import { InfiniteScroll } from 'mint-ui';
-	Vue.use(InfiniteScroll);
 	Vue.directive('back-top', {
 		inserted(el, binding) {
 			let e = binding.arg || 'click'
@@ -188,7 +186,6 @@
 </script>
 <style lang="css" scoped>
 	/*头部*/
-	
 	header {
 		position: relative;
 		width: 100%;
@@ -590,7 +587,7 @@
 		width: 1.0666666666666667rem;
 		height: 1.368421rem;
 		background: url(../../static/images/totop.png) no-repeat center;
-		background-size: cover;
+		background-size: 100%;
 		bottom: 66px;
 		right: 15px;
 		position: fixed;
