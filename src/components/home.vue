@@ -157,11 +157,11 @@
 				}, 2500);
 			},
 			getList() {
-				this.axios.get('http://10.0.157.220:8888/getBusinessList?pageNum=' + this.pageNum + '&pageSize=' + 5)
+				this.axios.get('http://localhost:8888/getBusinessList?pageNum=' + this.pageNum + '&pageSize=' + 5)
 					.then(res => {
-						this.businessList = this.businessList.concat(res.data.shop_data)
+						this.businessList = this.businessList.concat(res.data)
 						this.pageNum++
-							if(res.data.shop_data.length == 0) {
+							if(res.data.length == 0) {
 								this.loading = true;
 							} else {
 								this.loading = false;

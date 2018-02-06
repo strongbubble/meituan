@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="search">
 		<div class="search-header-wrap">
 			<div class="search-header">
 				<a class="search-back-wrap" href="/">
@@ -43,7 +43,7 @@
 				</div>
 			</div>
 		</div>
-		</div>
+	</div>
 </template>
 
 <script>
@@ -55,223 +55,262 @@
 			}
 		},
 		mounted() {
-
-		},
-		methods: {
-
-		},
-		computed: {
-
+			window.addEventListener('scroll', this.handleScroll)
+			document.documentElement.style.fontSize = innerWidth / 10 + "px";
+			window.onresize = function() {
+				document.documentElement.style.fontSize = innerWidth / 10 + "px";
+			}
 		}
 	}
 </script>
 
 <style lang="css" scoped>
-.search-header-wrap {
-    height: 2.2rem;
-}
-.search-header {
-    position: relative;
-    height: 2.2rem;
-    background: #fff;
-}
-.search-back-wrap {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 1.85rem;
-    height: 2.2rem;
-}
-a {
-    text-decoration: none;
-    outline: none;
-}
-.search-i-back {
-    position: absolute;
-    top: 0.65rem;
-    right: 0.25rem;
-    width: 0.7rem;
-    height: 0.7rem;
-    border: 2px solid #333;
-    border-width: 0 0 2px 2px;
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-.search-sec {
-    position: relative;
-    height: 1.5rem;
-    margin: 0 3.5rem 0 1.85rem;
-    padding-top: 0.35rem;
-}
-.search-icon {
-    position: absolute;
-    left: 0.35rem;
-    top: 0.75rem;
-    width: 0.7rem;
-    height: 0.7rem;
-    background: url(//xs01.meituan.net/waimai_i/img/search_ico.0a0d5ab4.png) no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-}
-.search-close-wrap {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 0.35rem;
-    width: 1rem;
-    height: 1.5rem;
-}
-.search-close {
-    position: absolute;
-    top: 0.45rem;
-    left: 0;
-    width: 0.6rem;
-    height: 0.6rem;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    background: #ccc;
-}
-.search-input {
-    display: block;
-    width: 100%;
-    height: 1.5rem;
-    line-height: 1rem;
-    padding: 0.25rem 0 0.25rem 1.25rem;
-    border: 0;
-    -webkit-border-radius: 0.1rem;
-    -moz-border-radius: 0.1rem;
-    border-radius: 0.1rem;
-    background: #F2F2F2;
-    font-size: 0.7rem;
-}
-.search-btn {
-    position: absolute;
-    top: 0.35rem;
-    right: 0.5rem;
-    width: 2.5rem;
-    height: 1.5rem;
-    line-height: 1.5rem;
-    font-size: 0.7rem;
-    color: #333;
-    text-align: center;
-    background: #FFD161;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-}
-.search-rmd-wrap {
-    margin-bottom: 0.5rem;
-}
-.search-rmd-title {
-    position: relative;
-    height: 1.75rem;
-    background: #fff;
-    padding-left: 0.75rem;
-}
-.search-rmd-title h2 {
-    border-bottom: 1px solid #E4E4E4;
-    line-height: 1.75rem;
-    color: #656565;
-    font-size: 0.7rem;
-    font-weight: normal;
-}
-.search-rmd {
-    max-height: 4.4rem;
-    padding: 0.4rem 0.45rem;
-    background: #fff;
-    overflow: hidden;
-}
-.search-rmd-text {
-    float: left;
-    max-width: 8.5rem;
-    min-width: 2.65rem;
-    height: 1.5rem;
-    line-height: 1.5rem;
-    margin: 0.4rem 0.25rem;
-    padding: 0 0.75rem;
+html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, form, button, dl, dt, dd, input, textarea {
+    margin: 0;
     -webkit-box-sizing: border-box;
-    -mox-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-border-radius: 0.1rem;
-    -moz-border-radius: 0.1rem;
-    border-radius: 0.1rem;
-    border: 1px solid #ccc;
-    color: #2f2f2f;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    text-align: center;
-    font-size: 0.65rem;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    word-wrap: break-word;
+    word-break: break-all;
+    padding: 0;
+    margin: 0;
+    font-family: Arial,Helvetica,sans-serif;
 }
-.search-rmd-title {
-    position: relative;
-    height: 1.75rem;
-    background: #fff;
-    padding-left: 0.75rem;
-}
-.search-rmd-title h2 {
-    border-bottom: 1px solid #E4E4E4;
-    line-height: 1.75rem;
-    color: #656565;
-    font-size: 0.7rem;
-    font-weight: normal;
-}
-.search-history-clear {
-    position: absolute;
-    top: 0.25rem;
-    right: 0.5rem;
-    width: 1.25rem;
-    height: 1.25rem;
-    background: url(//xs01.meituan.net/waimai_i/img/dusbin.cc885631.png) no-repeat center;
-    background-size: 0.75rem auto;
-}
-.search-history {
-    padding: 0.5rem 0.75rem 0;
-    background: #fff;
-    overflow: hidden;
-}
-.search-history-item {
-    float: left;
-    margin: 0 0.5rem 0.5rem 0;
-    height: 1.35rem;
-    line-height: 1.35rem;
-    padding: 0 0.5rem;
-    border: 1px solid #ccc;
-    color: #333;
-    font-size: 0.6rem;
-}
-.search-history-text {
-    line-height: 1.35rem;
-    font-size: 0.7rem;
-    color: #656565;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.rmd-poilist-head {
-    height: 32px;
-    line-height: 32px;
-    padding: 0 15px;
-    background: #efefef;
-    font-size: 12px;
-}
-.rmd-poilist {
-    background: #fff;
-}
-.rmd-poilist-loading {
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    font-size: 12px;
-}
-.searching {
-    margin-top: 5rem;
-    line-height: 1.1rem;
-    font-size: 0.8rem;
-    color: #656565;
-    text-align: center;
-}
+	.search {
+		width: 100%;
+		height: auto;
+		overflow: hidden;
+	}
+	
+	.search-header-wrap {
+		height:1.263157rem;
+	}
+	
+	.search-header {
+		position: relative;
+		height:1.263157rem;
+		background: #fff;
+	}
+	
+	.search-back-wrap {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 1.052631rem;
+		height:1.263157rem;
+	}
+	
+	a {
+		text-decoration: none;
+		outline: none;
+	}
+	
+	.search-i-back {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.25rem;
+		width: 0.473684rem;
+		height:0.473684rem;
+		border: 2px solid #333;
+		border-width: 0 0 2px 2px;
+		-webkit-transform: rotate(45deg);
+		-moz-transform: rotate(45deg);
+		transform: rotate(45deg);
+	}
+	
+	.search-sec {
+		position: relative;
+		height: 0.868421rem;
+		margin: 0 2.2rem 0 0.85rem;
+		padding-top: 0.35rem;
+	}
+	
+	.search-icon {
+		position: absolute;
+		left: 0.35rem;
+		top: 0.6rem;
+		width: 0.394736rem;
+		height:0.394736rem;
+		background: url(//xs01.meituan.net/waimai_i/img/search_ico.0a0d5ab4.png) no-repeat;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		background-size: cover;
+	}
+	
+	.search-close-wrap {
+		display: none;
+		position: absolute;
+		right: 0;
+		top: 0.35rem;
+		width: 1rem;
+		height: 0.868421rem;
+	}
+	
+	.search-close {
+		position: absolute;
+		top: 0.45rem;
+		left: 0;
+		width: 0.6rem;
+		height: 0.6rem;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+		border-radius: 50%;
+		background: #ccc;
+	}
+	
+	.search-input {
+		display: block;
+		width: 100%;
+		height: 0.868421rem;
+		line-height: 0.868421rem;
+		padding: 0.25rem 0 0.25rem 1.25rem;
+		border: 0;
+		-webkit-border-radius: 0.1rem;
+		-moz-border-radius: 0.1rem;
+		border-radius: 0.1rem;
+		background: #F2F2F2;
+		font-size: 0.4rem;
+	}
+	
+	.search-btn {
+		position: absolute;
+		top: 0.35rem;
+		right: 0.5rem;
+		width: 1.447368rem;
+		height: 0.868421rem;
+		line-height: 0.868421rem;
+		font-size: 0.4rem;
+		color: #333;
+		text-align: center;
+		background: #FFD161;
+		-webkit-border-radius: 2px;
+		-moz-border-radius: 2px;
+		border-radius: 2px;
+	}
+	
+	.search-rmd-wrap {
+		margin-bottom: 0.5rem;
+	}
+	
+	.search-rmd-title {
+		position: relative;
+		height: 1.026315rem;
+		background: #fff;
+		padding-left: 0.35rem;
+	}
+	
+	.search-rmd-title h2 {
+		border-bottom: 1px solid #E4E4E4;
+		line-height: 1.026315rem;
+		color: #656565;
+		font-size: 0.4rem;
+		font-weight: normal;
+	}
+	
+	.search-rmd {
+		max-height: 4.4rem;
+		padding: 0.2rem 0.55rem;
+		background: #fff;
+		overflow: hidden;
+	}
+	
+	.search-rmd-text {
+		float: left;
+		max-width: 8.5rem;
+		min-width: 2.65rem;
+		height: 0.868421rem;
+		line-height: 0.868421rem;
+		margin: 0.2rem 0.25rem;
+		padding: 0 0.75rem;
+		-webkit-box-sizing: border-box;
+		-mox-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-border-radius: 0.1rem;
+		-moz-border-radius: 0.1rem;
+		border-radius: 0.1rem;
+		border: 1px solid #ccc;
+		color: #2f2f2f;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		text-align: center;
+		font-size: 0.35rem;
+	}
+	
+	.search-rmd-title {
+		position: relative;
+		height: 1.026315rem;
+		background: #fff;
+		padding-left: 0.75rem;
+	}
+	
+	.search-rmd-title h2 {
+		border-bottom: 1px solid #E4E4E4;
+		line-height: 1.026315rem;
+		color: #656565;
+		font-size: 0.4rem;
+		font-weight: normal;
+	}
+	
+	.search-history-clear {
+		position: absolute;
+		top: 0.25rem;
+		right: 0.5rem;
+		width: 0.710526rem;
+		height: 0.710526rem;
+		background: url(//xs01.meituan.net/waimai_i/img/dusbin.cc885631.png) no-repeat center;
+		background-size: 0.35rem auto;
+	}
+	
+	.search-history {
+		padding: 0.5rem 0.75rem 0;
+		background: #fff;
+		overflow: hidden;
+	}
+	
+	.search-history-item {
+		float: left;
+		margin: 0 0.5rem 0.5rem 0;
+		height: 0.868421rem;
+		line-height: 0.868421rem;
+		padding: 0 0.5rem;
+		border: 1px solid #ccc;
+		color: #333;
+		font-size: 0.6rem;
+	}
+	
+	.search-history-text {
+		line-height: 0.868421rem;
+		font-size: 0.4rem;
+		color: #656565;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+	
+	.rmd-poilist-head {
+		height: 32px;
+		line-height: 32px;
+		padding: 0 15px;
+		background: #efefef;
+		font-size: 12px;
+	}
+	
+	.rmd-poilist {
+		background: #fff;
+	}
+	
+	.rmd-poilist-loading {
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		font-size: 12px;
+	}
+	
+	.searching {
+		margin-top: 5rem;
+		line-height: 1.1rem;
+		font-size: 0.8rem;
+		color: #656565;
+		text-align: center;
+	}
 </style>
