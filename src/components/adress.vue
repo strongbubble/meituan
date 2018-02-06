@@ -10,6 +10,10 @@
 				</li>
 			</ul>
 		</header>
+		<div class="mine">
+			<p>彩虹家园北区 <span>9号楼4单元1702</span></p>
+			<div>赵&nbsp;先生<span>18612452559</span></div>
+		</div>
 		<footer>
 			<router-link to="/add">
 				<p>
@@ -93,6 +97,22 @@
 		color: #666;
 		text-align: center;
 	}
+	/*中间部分*/
+	.mine{
+		height: 1.76rem;
+		background: #fff;
+		font-size: 0.36rem;
+		padding-left: 0.26rem;
+		/*line-height: 1.76rem;*/
+	}
+	.mine p{
+		line-height: 0.57rem;
+		padding: 0.31rem 0 0.13rem;
+	}
+	.mine div span{
+		margin-left: 1.57rem;
+	}
+	
 	/*       底部部分              */
 	
 	footer {
@@ -100,7 +120,7 @@
 		width: 100%;
 		background: #fff;
 		position: fixed;
-		bottom: 1.31rem;
+		bottom: 0;
 	}
 	
 	footer p {
