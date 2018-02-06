@@ -8,9 +8,11 @@
 		background: #F4F4F4;
 		font-size: 1px;
 	}
-	li{
+	
+	li {
 		list-style: none;
 	}
+	
 	a {
 		text-decoration: none;
 	}

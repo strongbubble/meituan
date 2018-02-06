@@ -36,7 +36,7 @@
 		</div>
 		<!--附近商家列表-->
 		<div class="poilist">
-			<ul class="poilist-ul">
+			<ul class="poilist-ul" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="2">
 				<!--第一个li开始-->
 				<li class="field" v-for="list in businessList" @click="toBusinessDetail(list.businessId)">
 					<a href="#">
@@ -89,16 +89,26 @@
 					</div>
 				</li>
 			</ul>
+			<p class="myp" :style="{ display: display}">
+				<span> 加载中...</span>
+			</p>
 		</div>
 	</div>
 </template>
 
 <script>
+	import Vue from 'vue'
+	import { InfiniteScroll } from 'mint-ui';
+	Vue.use(InfiniteScroll);
 	export default {
 		name: "home",
 		data() {
 			return {
 				businessList: [],
+				len: 2,
+				tempArr: [],
+				isShow: false,
+				display: 'none',
 			};
 		},
 		filters: {
@@ -109,11 +119,7 @@
 			}
 		},
 		created() {
-			this.axios.get('http://10.0.157.220:8888/getBusinessList?pageNum=1&pageSize=2')
-				.then(res => {
-					console.log(res.data.shop_data)
-					this.businessList = res.data.shop_data
-				})
+			this.getList(2)
 		},
 		methods: {
 			toBusinessDetail(businessId) {
@@ -123,6 +129,28 @@
 						businessId
 					}
 				})
+			},
+			loadMore() {
+				this.loading = true;
+				this.getList(this.len)
+				setTimeout(() => {
+					this.businessList = this.businessList.concat(this.tempArr)
+					this.len += 2
+					this.getList(this.len)
+					this.loading = true;
+					this.isShow = !this.isShow;
+					this.display = 'block'
+				}, 2500);
+				this.display = 'none'
+			},
+			getList(len) {
+				var arr = []
+				this.axios.get('http://10.0.157.220:8888/getBusinessList?pageNum=1&pageSize=' + len)
+					.then(res => {
+						console.log(res.data.total_count)
+						this.businessList = res.data.shop_data
+						this.tempArr = res.data.shop_data
+					})
 			}
 		},
 		mounted() {
@@ -135,6 +163,104 @@
 </script>
 <style lang="css" scoped>
 	/*头部*/
+	
+	@import url(http://fonts.googleapis.com/css?family=Open+Sans:700);
+	body {
+		background: #222;
+		color: #eee;
+		font-size: 34px;
+		font-weight: 700;
+		font-family: 'Open Sans', sans-serif;
+	}
+	
+	.container {
+		position: absolute;
+		width: 120px;
+		height: 50px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	
+	.container>div {
+		position: absolute;
+		transform-origin: center;
+	}
+	
+	.l {
+		left: 8px;
+	}
+	
+	.i {
+		left: 60px;
+	}
+	
+	.n {
+		left: 72px;
+	}
+	
+	.g {
+		left: 99px;
+	}
+	
+	.square,
+	.circle,
+	.triangle {
+		left: 30px;
+	}
+	
+	.square {
+		background: #75B3D1;
+		width: 24px;
+		height: 24px;
+		left: 32px;
+		top: 12px;
+		transform: scale(0);
+		animation: shrinkgrow 3s ease-in-out infinite;
+		animation-delay: 2s;
+	}
+	
+	.circle {
+		background: #81D47D;
+		width: 27px;
+		height: 27px;
+		top: 10px;
+		left: 30px;
+		border-radius: 50%;
+		animation: shrinkgrow 3s ease-in-out infinite;
+		animation-delay: 0s;
+	}
+	
+	.triangle {
+		width: 0;
+		height: 0;
+		left: 30px;
+		top: 11px;
+		border-style: solid;
+		border-width: 0 14.5px 25.1px 14.5px;
+		border-color: transparent transparent #D2798C transparent;
+		transform: scale(0);
+		animation: shrinkgrow 3s ease-in-out infinite;
+		animation-delay: 1s;
+	}
+	
+	@keyframes shrinkgrow {
+		0% {
+			transform: scale(0);
+		}
+		12.5% {
+			transform: scale(1)
+		}
+		25% {
+			transform: scale(1)
+		}
+		33% {
+			transform: scale(0)
+		}
+		100% {
+			transform: scale(0)
+		}
+	}
 	
 	header {
 		position: relative;
@@ -327,6 +453,7 @@
 		width: 100%;
 		height: auto;
 		background: #fff;
+		padding-bottom: 50px;
 	}
 	
 	.field {
@@ -515,5 +642,13 @@
 	.other .li-text {
 		margin-left: 0.447368rem;
 		line-height: 0.394736rem;
+	}
+	
+	.myp {
+		height: 50px;
+		width: 100%;
+		font-size: 20px;
+		text-align: center;
+		color: #333;
 	}
 </style>
