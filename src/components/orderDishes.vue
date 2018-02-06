@@ -98,7 +98,7 @@
 		methods: {
 			change(tag, index) {
 				this.changeRed = index;
-				this.axios.get('http://10.0.157.220:8888/getBusinessList')
+				this.axios.get('http://10.0.157.220:8888/getBusinessList?pageNum=1&pageSize=5')
 					.then(res => {
 						this.businessList = res.data.shop_data
 						for(let tempBusiness of this.businessList) {

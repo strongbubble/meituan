@@ -8,8 +8,8 @@ import '../static/App.css'
 // 引入全部组件
 import Mint from 'mint-ui';
 Vue.use(Mint);
-import { InfiniteScroll } from 'mint-ui';
-Vue.use(InfiniteScroll);
+//import { InfiniteScroll } from 'mint-ui';
+//Vue.use(InfiniteScroll);
 // 导入我们自定义的vuex仓库
 import store from './store'
 Vue.prototype.axios = axios

@@ -40,7 +40,7 @@
 						</div>
 					</div>
 					<ul class="order-region">
-						<li class="order-entry"> <span class="order-price">{{poi_info}}</span> <span class="order-name">配送费</span> </li>
+						<li class="order-entry"> <span class="order-price">￥{{poi_info}}</span> <span class="order-name">配送费</span> </li>
 					</ul>
 					<div class="divide">
 						<div class="divide-line"></div>
@@ -56,7 +56,7 @@
 						<div class="divide-line"></div>
 					</div>
 					<ul class="order-region clearfix">
-						<li class="order-entry"><span class="pay-price">实付<em>￥99</em></span><span class="total-original">共计￥38.00</span></li>
+						<li class="order-entry"><span class="pay-price">实付<em>￥{{TotalPrice}}</em></span><span class="total-original">共计￥{{TotalPrice}}</span></li>
 					</ul>
 				</div>
 
@@ -75,7 +75,7 @@
 			</form>
 			<div class="order-btn-field">
 				<input class="combtn order-btn" type="submit" value="提交订单">
-				<span class="order-total-field">待支付<em class="order-total">￥38.00</em></span>
+				<span class="order-total-field">待支付<em class="order-total">￥{{TotalPrice}}</em></span>
 				<span class="order-benefit"></span>
 			</div>
 		</div>
@@ -92,6 +92,7 @@
 				checked: [],
 				showArr: [],
 				poi_info: '',
+				totalPrice: 0
 			}
 		},
 		mounted() {
@@ -108,7 +109,6 @@
 					obj.id = i.id
 					obj.numbers = i.numbers
 					this.checked.push(obj)
-					console.log(this.checked)
 				}
 				//商品信息
 				for(var j in res.data) {
@@ -155,8 +155,17 @@
 		methods: {
 			back() {
 				this.$router.go(-1)
-			},
+			}
 		},
+		computed: {
+			TotalPrice() {
+				for(var i of this.showArr) {
+					this.totalPrice += i.min_price * i.numbers
+				}
+				this.totalPrice = Math.ceil(this.totalPrice) + Math.ceil(this.poi_info )
+				return this.totalPrice
+			}
+		}
 	}
 </script>
 
