@@ -7,15 +7,15 @@
 				</a>
 				<div class="search-sec">
 					<form action="#">
-						<i class="search-icon"></i>
-						<span class="j-search-close-wrap search-close-wrap"><i class="search-close"></i></span>
-						<input class="j-search-input search-input" v-model='search'  @focus="onFocus" type="search" placeholder="请输入商家或商品名称" />
+						<!--<i class="search-icon"></i>-->
+						<!--<span class="j-search-close-wrap search-close-wrap"><i class="search-close"></i></span>-->
+						<input class="j-search-input search-input" v-model='search' @focus="onFocus" @input="onInput" type="search" placeholder="请输入商家或商品名称" />
 					</form>
 				</div>
-				<span class="j-search-btn search-btn">搜索</span>
+				<span class="j-search-btn search-btn" @click="history">搜索</span>
 			</div>
 		</div>
-		<ul v-if="searchData.length > 0" id="listStyle" :style ="{display : display}">
+		<ul v-if="searchData.length > 0" id="listStyle" :style="{display : display}">
 			<li class="field" v-for="list in searchData" @click="toBusinessDetail(list.businessId)">
 				<a href="#">
 					<div class="field-list">
@@ -67,24 +67,22 @@
 				</div>
 			</li>
 		</ul>
-		<div v-else>暂无数据</div>
+		<div v-else class="nothing">暂无数据</div>
 		<div id="rmd-history">
 			<div class="j-search-rmd-wrap search-rmd-wrap" style="">
 				<div class="search-rmd-title">
 					<h2>热门搜索</h2></div>
 				<div class="j-search-rmd search-rmd">
-					<a href="/restaurant/349761656555664" class="j-search-rmd-text search-rmd-text">巴贝拉意式休闲餐厅（昌平万科店）</a>
-					<a href="/restaurant/475084507279453" class="j-search-rmd-text search-rmd-text">望京小腰（五街店）</a>
-					<a href="/restaurant/486921437142538" class="j-search-rmd-text search-rmd-text">肯德基宅急送(昌平店）</a>
+					<a class="j-search-rmd-text search-rmd-text" v-for="list in searchData" @click="toBusinessDetail(list.businessId)">{{list.businessName}}</a>
 				</div>
 			</div>
 			<div class="j-search-history-wrap search-history-wrap" style="">
 				<div class="search-rmd-title">
-					<h2>历史搜索</h2><span class="j-search-history-clear search-history-clear"></span></div>
+					<h2>历史搜索</h2><span class="j-search-history-clear search-history-clear" @click="clear"></span></div>
 
 				<div class="j-search-history search-history">
-					<div class="j-search-history-item search-history-item"><span class="search-history-text">盛昌潮汕砂锅粥</span></div>
-					<div class="j-search-history-item search-history-item"><span class="search-history-text">望京</span></div>
+					<div class="j-search-history-item search-history-item" v-for="h in historys"><span class="search-history-text">{{h}}</span></div>
+					<!--<div class="j-search-history-item search-history-item"><span class="search-history-text">望京</span></div>-->
 				</div>
 			</div>
 			<div id="rmd-poilist-wrap" style="display: none;">
@@ -105,7 +103,9 @@
 			return {
 				search: '',
 				products: [],
-				display: 'none'
+				display: 'none',
+				historys: [],
+				obj: {},
 			}
 		},
 		methods: {
@@ -114,9 +114,47 @@
 					path: '/home'
 				})
 			},
-			onFocus(){
-					this.display= 'block';
+			onFocus() {
+				this.display = 'block';
+			},
+			onInput() {
+
+			},
+			clear() {
+				for(var key in window.localStorage) {
+					if(/^_history/.test(key)) {
+						//本地存储删除
+						window.localStorage.removeItem(key);
+						this.historys = []
+					}
+				}
+			},
+			history() {
+
+			},
+			toBusinessDetail(businessId) {
+				this.$router.push({
+					path: '/businessList',
+					query: {
+						businessId
+					}
+				})
+				if(this.search != ""){
+					this.obj.info = this.search
+					this.obj.dates = new Date().getTime()
+					window.localStorage.setItem('_history' + this.obj.dates, JSON.stringify(this.obj));
+				}
+			},
+		},
+		created() {
+			var str = ''
+			for(var key in window.localStorage) {
+				if(/^_history/.test(key)) { //获取已msg开头的所有数据
+					var obj2 = JSON.parse(window.localStorage.getItem(key))
+					this.historys.push(obj2.info)
+				}
 			}
+			console.log(this.historys)
 		},
 		mounted() {
 			window.addEventListener('scroll', this.handleScroll)
@@ -129,9 +167,6 @@
 					this.businessList = res.data.shop_data
 					this.products = res.data.shop_data
 					console.log(this.products)
-					//					for(let tempBusiness of this.businessList) {
-					//						this.businessName.push(tempBusiness.businessName)
-					//					}
 				})
 		},
 		filters: {
@@ -269,6 +304,7 @@
 	}
 	
 	.search-input {
+		outline: none;
 		display: block;
 		width: 100%;
 		height: 0.868421rem;
@@ -318,7 +354,7 @@
 	}
 	
 	.search-rmd {
-		max-height: 4.4rem;
+		max-height: 4.2rem;
 		padding: 0.2rem 0.55rem;
 		background: #fff;
 		overflow: hidden;
@@ -629,5 +665,14 @@
 		height: auto;
 		overflow: hidden;
 		background: #fff;
+	}
+	
+	.nothing {
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		background: #fff;
+		font-size: 18px;
+		color: #666;
 	}
 </style>
