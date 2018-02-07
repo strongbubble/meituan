@@ -101,7 +101,7 @@
 				document.documentElement.style.fontSize = innerWidth / 10 + "px";
 			}
 
-			this.axios.get('http://localhost:8888/getDuckDetails').then(res => {
+			this.axios.get('http://10.0.157.220:8888/getDuckDetails').then(res => {
 				//商品id
 				var shopList = JSON.parse(this.$route.query.checked)
 				for(var i of shopList) {
