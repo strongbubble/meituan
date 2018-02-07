@@ -62,7 +62,7 @@
 			}
 		},
 		created() {
-			this.axios.get('http://localhost:8888/getList')
+			this.axios.get('http://10.0.157.220:8888/getList')
 			.then(res => {
 				// this.myList = res.data.data.digestlist
 				// console.log(this.myList);
@@ -79,6 +79,9 @@
 </script>
 
 <style lang="css" scoped>
+	*{
+		overflow: inherit
+	}
 	#header{
 		width: 100%;
 		height: 1.157895rem;

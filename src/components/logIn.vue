@@ -1,7 +1,7 @@
 <template>
 	<div id="id1">
 		<div class="top">
-			<img src="../../static/order_img/left.gif" />
+			<img @click="fanhui" src="../../static/order_img/left.gif" />
 			<h3>登录</h3>
 			<span>立即注册</span>
 		</div>
@@ -46,6 +46,11 @@
 			},
 			switcher1() {
 				
+			},
+			fanhui: function (params) {
+					this.$router.push({
+					path: '/home'
+				})
 			}
 		}
 

@@ -12,22 +12,23 @@
 		<div class="yanzheng">
 			<div class="yanzheng_top">
 				<img src="../../static/order_img/手机.gif" />
-				<input type="text" placeholder="请输入手机号" />
+				<input v-model="phoneNumber"  type="text" placeholder="请输入手机号"  @blur="modalshow"/>
 				<button id="btn_11"></button>
-				<button id="btn_12">获取验证码</button>
+				<button @click="getpwd" id="btn_12" >{{ msg }}</button>
+				<p>{{ pwd }}</p>
 			</div>
 
 			<div class="yangzheng_down">
 				<img src="../../static/order_img/验证.gif" />
-				<input type="text" placeholder="请输入短信验证码"/>
+				<input v-model="phonePwd" type="text" placeholder="请输入短信验证码"/>
 
 			</div>
 			<p>未注册过的手机将自动注册为美团账户</p>
 			
 		</div>
-			<router-link to="/order">
+			<!-- <router-link :to="'/'+ router"> -->
 			<button @click="login" id="login">登录</button>
-			</router-link>
+			<!-- </router-link> -->
     </div>
 </template>
     
@@ -36,9 +37,16 @@ export default {
     name: "longinPhone",
     data () {
         return {
-             
+             msg: '获取验证码',
+			 pwd:'',
+			 phonePwd: '',
+			 router:"",
+			 phoneNumber: null
+
+			 
         };
     },
+
     	mounted() {
 			document.documentElement.style.fontSize = innerWidth / 10 + "px";
 			window.onresize = function() {
@@ -47,7 +55,75 @@ export default {
 		},
 	methods: {
 		login() {
-			console.log('111');
+			// console.log('111');
+			// var arr = [];
+			
+			// for (let i = 0; i < this.phonePwd.length; i++) {
+			// 	// arr.push(parseInt(this.phonePwd[i]));	
+			
+			// }
+			// console.log(str);
+			// console.log(arr);
+			// console.log(this.pwd.length);
+			// console.log(arr);
+			// console.log(this.pwd);
+
+			// for (let i = 0; i < arr.length; i++) {
+				console.log(this.phonePwd,this.pwd);
+					if (this.phonePwd == this.pwd) {
+					this.$router.push({
+					path: '/order'
+				})
+			} else {
+				alert('验证码错误, 请重新获取');
+				return
+			}
+				
+			// }
+
+		},
+		modalshow() {
+			// console.log('==================');
+			var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+			if (myreg.test(this.phoneNumber)) {
+				return
+			} else {
+				alert('请输入正确的手机号')
+			}
+		},
+		
+		getpwd() {
+				var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+				var j, str = '';
+				for(var i = 0; i < 4; i++) {
+					j = parseInt(Math.random() * arr.length);
+					str += arr[j]
+				}
+	
+
+
+			// var str=0
+			// for (var i = 0; i < 4; i++) {
+			// 	var randoms = parseInt((Math.random() * 10));
+			// 	// this.pwd.push(randoms);
+			// 		str+=randoms
+			// }
+			console.log(str);
+			this.pwd = str
+			var _this =this
+			var time = 60;
+			var clearTime = setInterval(function () {
+				time--;
+				_this.msg = time + "s后重新获取"
+				if (time == 0) {
+					clearInterval(clearTime)
+					_this.msg = "获取验证码"
+					_this.pwd.length = 0;
+				// console.log(this.pwd);
+				}
+			}, 1000);
+			// console.log(this.msg);
+
 		}
 	}
 		
@@ -135,6 +211,15 @@ export default {
 		margin: 0 auto;
 		border-bottom: 0.026315rem solid #ddd8ce;
 		padding-top: 0.342105rem;
+		position: relative;
+	}
+	.yanzheng_top p{
+		position: absolute;
+		/* left: 6.25rem; */
+		top: 6.25rem;
+		background-color: #c39404;
+		font-size: 1.875rem;
+
 	}
 	
 	.yanzheng_top img {
