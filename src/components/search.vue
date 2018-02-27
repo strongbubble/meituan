@@ -162,7 +162,7 @@
 			window.onresize = function() {
 				document.documentElement.style.fontSize = innerWidth / 10 + "px";
 			}
-			this.axios.get('http://10.0.157.220:8888/getBusinessList?pageNum=1&pageSize=20')
+			this.axios.get('http://10.0.157.235:8888/getBusinessList?pageNum=1&pageSize=20')
 				.then(res => {
 					this.businessList = res.data.shop_data
 					this.products = res.data.shop_data

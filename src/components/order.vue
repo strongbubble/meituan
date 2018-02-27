@@ -62,7 +62,7 @@
 			}
 		},
 		created() {
-			this.axios.get('http://10.0.157.220:8888/getList?pageNum=1&pageSize=3')
+			this.axios.get('http://10.0.157.235:8888/getList?pageNum=1&pageSize=3')
 			.then(res => {
 				// this.myList = res.data.data.digestlist
 				// console.log(this.myList);
